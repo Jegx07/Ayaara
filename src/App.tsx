@@ -19,6 +19,7 @@ import NotFound from "./pages/NotFound";
 import CareerAssistant from "./pages/CareerAssistant";
 import CareerPath from "./pages/CareerPath";
 import MentalSupport from "./pages/MentalSupport";
+import Profile from "./pages/Profile";
 import Chatbot from "./components/Chatbot";
 
 const queryClient = new QueryClient();
@@ -52,7 +53,7 @@ const App = () => {
             <Route path="/professor/reports" element={<ProfessorReports />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/iot" element={<IoTDeviceHub />} />
-            <Route path="/profile" element={<Settings />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/mental-support" element={<MentalSupport />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

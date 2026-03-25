@@ -1,305 +1,172 @@
 import React from 'react';
-import Layout from '@/components/ui/Layout';
-import AnimatedShaderHero from '@/components/ui/animated-shader-background';
-import { Rocket, Sparkles, Brain, Activity, Target, Users, BookOpen, TrendingUp, Award, Shield } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Activity, Brain, Lock, Sparkles, Target, Users, Waypoints, Wifi } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const features = [
   {
     icon: Brain,
-    title: "AI-Powered Analytics",
-    description: "Advanced machine learning algorithms analyze your motivation patterns and provide personalized insights.",
-    color: "text-primary"
+    title: 'AI-Powered Analytics',
+    description: 'Machine learning models analyze motivation and focus patterns to personalize guidance.',
   },
   {
     icon: Activity,
-    title: "Real-time Monitoring",
-    description: "24/7 vital sign tracking including heart rate, blood pressure, and body temperature for comprehensive health insights.",
-    color: "text-accent"
+    title: 'Real-time Monitoring',
+    description: 'Continuous wellness signals help identify stress, fatigue, and high-performance windows.',
   },
   {
     icon: Target,
-    title: "Goal Tracking",
-    description: "Set and achieve your academic and personal goals with intelligent progress tracking and milestone celebrations.",
-    color: "text-success"
+    title: 'Goal Tracking',
+    description: 'Structured milestones keep your academic, wellness, and career targets visible every day.',
   },
   {
     icon: Users,
-    title: "Collaborative Learning",
-    description: "Connect with peers and mentors in a supportive environment designed to boost collective motivation.",
-    color: "text-destructive"
+    title: 'Collaborative Support',
+    description: 'Mentors and peer communities provide fast feedback and accountability loops.',
   },
   {
-    icon: BookOpen,
-    title: "Skill Assessment",
-    description: "Comprehensive skill gap analysis and personalized course recommendations to advance your career.",
-    color: "text-primary"
+    icon: Waypoints,
+    title: 'Career Alignment',
+    description: 'Skill insights map directly to role readiness and internship planning.',
   },
   {
-    icon: Shield,
-    title: "Privacy First",
-    description: "Your data is encrypted and secure. We prioritize your privacy while delivering powerful insights.",
-    color: "text-accent"
-  }
+    icon: Lock,
+    title: 'Privacy First',
+    description: 'Encrypted personal data with user-controlled visibility and secure access layers.',
+  },
 ];
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "Computer Science Student",
-    content: "MotiTrack helped me increase my study efficiency by 40%. The AI recommendations are spot-on!",
-    rating: 5
+    quote: 'MotiTrack helped me increase my study efficiency by 40%. The recommendations are incredibly practical.',
+    name: 'Sarah Johnson',
+    role: 'Computer Science Student',
   },
   {
-    name: "Dr. Michael Chen",
-    role: "Professor of Psychology",
-    content: "As an educator, I can now track my students' engagement levels and provide timely support when needed.",
-    rating: 5
+    quote: 'I can now spot disengagement early and support students before they fall behind.',
+    name: 'Dr. Michael Chen',
+    role: 'Professor of Psychology',
   },
   {
-    name: "Emily Rodriguez",
-    role: "Pre-Med Student",
-    content: "The motivation tracking has been a game-changer for my MCAT prep. I finally understand my peak performance hours.",
-    rating: 5
-  }
+    quote: 'My prep routine finally became consistent because I can see exactly when I perform best.',
+    name: 'Emily Rodriguez',
+    role: 'Pre-Med Student',
+  },
 ];
 
 export default function LandingPage() {
   return (
-    <Layout>
-      {/* Navigation */}
-      <motion.nav 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#0f172a]/90 backdrop-blur-lg border-b border-[#38bdf8]"
-      >
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[#f6f8f6]">
+      <header className="border-b border-[#e1e8e3] bg-[#fbfcfb]">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 flex items-center justify-center">
-              <img src="/src/assets/ayaraa-logo.png" alt="Ayaraa Logo" className="w-8 h-8 object-contain" />
-            </div>
-          <span className="font-bold text-xl text-white ml-2">ayaraa</span>
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#1d7d54] to-[#145d3f]" />
+            <span className="font-display text-lg font-semibold text-[#18271d]">Ayaara</span>
           </div>
-          
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <Link to="/dashboard">
-              <Button variant="outline" className="text-primary-blue border-primary-blue hover:bg-primary-blue hover:text-white transition">
-                Dashboard
-              </Button>
+              <Button variant="outline" className="border-[#d7dfda] text-[#234033] hover:bg-[#f0f4f1]">Dashboard</Button>
             </Link>
             <Link to="/auth">
-              <Button className="bg-primary-blue text-white shadow-lg hover:bg-blue-700 transition">
-                Get Started
-              </Button>
+              <Button className="bg-[#1d7d54] hover:bg-[#145d3f]">Get Started</Button>
             </Link>
           </div>
         </div>
-      </motion.nav>
+      </header>
 
-      {/* Hero Section */}
-      <AnimatedShaderHero
-        trustBadge={{
-          text: "Trusted by 10,000+ Students",
-          icons: [<Rocket key={1} size={20} />, <Sparkles key={2} size={20} />],
-          className: "bg-[#0f172a] text-[#38bdf8] rounded-full px-4 py-2 inline-flex items-center gap-2"
-        }}
-        headline={{
-          line1: "Unlock Your Potential",
-          line2: "With AI Motivation Tracking",
-        }}
-        subtitle="Empowering students and educators with personalized motivation insights and real-time tracking to boost academic success."
-        subtitleClassName="text-gray-300"
-        buttons={{
-          primary: {
-            text: "Start Tracking",
-            onClick: () => alert('Start Tracking clicked!'),
-            className: "bg-gradient-to-r from-[#38bdf8] to-[#2563eb] text-white shadow-lg hover:opacity-90"
-          },
-          secondary: {
-            text: "View Features",
-            onClick: () => alert('View Features clicked!'),
-            className: "bg-white text-[#2563eb] hover:bg-gray-100"
-          },
-        }}
-      />
-
-      {/* Features Section */}
-      <section className="py-20 bg-[#0f172a]">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              Powerful Features for <span className="text-[#38bdf8]">Peak Performance</span>
-            </h2>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Discover how MotiTrack combines cutting-edge technology with educational psychology 
-              to unlock your full potential.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="bg-[#1e293b] border border-[#38bdf8] shadow-lg rounded-lg h-full">
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-[#38bdf8]/10">
-                        <feature.icon className={`w-6 h-6 text-[#38bdf8]`} />
-                      </div>
-                      <CardTitle className="text-lg text-white">{feature.title}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-gray-300 text-sm leading-relaxed">
-                      {feature.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-20 bg-[#0f172a]">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              Trusted by <span className="text-[#38bdf8]">Students & Educators</span>
-            </h2>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Join thousands of learners who have transformed their academic journey with MotiTrack.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
-              >
-                <Card className="bg-[#1e293b] rounded-lg shadow-lg h-full border border-[#38bdf8]">
-                  <CardContent className="pt-6">
-                    <div className="flex mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Award key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-sm mb-4 italic text-gray-300">"{testimonial.content}"</p>
-                    <div>
-                      <p className="font-semibold text-sm text-white">{testimonial.name}</p>
-                      <p className="text-xs text-gray-400">{testimonial.role}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-[#0f172a]">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center space-y-8 max-w-3xl mx-auto"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Ready to Transform Your Learning Journey?
-            </h2>
-            <p className="text-gray-300 text-lg">
-              Join MotiTrack today and experience the future of motivation tracking and educational technology.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/auth">
-                <Button size="lg" className="bg-gradient-to-r from-[#38bdf8] to-[#2563eb] text-white shadow-lg">
-                  Start Your Free Trial
-                </Button>
-              </Link>
-              <Link to="/dashboard">
-                <Button size="lg" variant="outline" className="text-[#38bdf8] border-[#38bdf8] hover:bg-white hover:text-[#38bdf8]">
-                  View Demo Dashboard
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[#0f172a] border-t border-[#38bdf8]">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-[#38bdf8] rounded-lg flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-bold text-xl text-white">MotiTrack</span>
-              </div>
-              <p className="text-gray-300 text-sm">
-                Empowering students and educators with AI-powered motivation tracking technology.
+      <main>
+        <section className="relative overflow-hidden px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+          <div className="absolute inset-0 opacity-60" style={{ background: 'radial-gradient(circle at top right, #d8ede1 0%, transparent 55%)' }} />
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+            <div className="relative z-10">
+              <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#d8e3dc] bg-[#fbfcfb] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#1d7d54]">
+                <Sparkles className="h-3.5 w-3.5" /> Trusted by Students and Educators
               </p>
+              <h1 className="font-display text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#18271d] sm:text-5xl">
+                Unlock Your Potential with AI Motivation Tracking
+              </h1>
+              <p className="mt-4 max-w-xl text-base text-[#5f7267] sm:text-lg">
+                Ayaara combines wellness intelligence, learning analytics, and career guidance in one student portal designed to drive measurable growth.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link to="/auth">
+                  <Button className="bg-[#1d7d54] hover:bg-[#145d3f]">Start Free Trial</Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button variant="outline" className="border-[#d7dfda] text-[#234033] hover:bg-[#f0f4f1]">View Demo</Button>
+                </Link>
+              </div>
             </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">API</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">Support</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">Privacy</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-[#38bdf8] transition-colors">Careers</a></li>
-              </ul>
+            <div className="relative z-10 rounded-3xl border border-[#dde3df] bg-[#fbfcfb] p-5 shadow-[0_12px_40px_rgba(31,60,44,0.08)]">
+              <p className="font-display text-xl font-semibold text-[#18271d]">Platform Snapshot</p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-xl border border-[#e3e9e5] bg-white p-4">
+                  <p className="text-xs uppercase tracking-wide text-[#8ea096]">Motivation score</p>
+                  <p className="mt-1 font-display text-3xl font-semibold text-[#1d7d54]">85%</p>
+                </div>
+                <div className="rounded-xl border border-[#e3e9e5] bg-white p-4">
+                  <p className="text-xs uppercase tracking-wide text-[#8ea096]">Focus readiness</p>
+                  <p className="mt-1 font-display text-3xl font-semibold text-[#1d7d54]">88%</p>
+                </div>
+                <div className="rounded-xl border border-[#e3e9e5] bg-white p-4">
+                  <p className="text-xs uppercase tracking-wide text-[#8ea096]">Career alignment</p>
+                  <p className="mt-1 font-display text-3xl font-semibold text-[#1d7d54]">75%</p>
+                </div>
+                <div className="rounded-xl border border-[#e3e9e5] bg-white p-4">
+                  <p className="text-xs uppercase tracking-wide text-[#8ea096]">Connected devices</p>
+                  <p className="mt-1 flex items-center gap-2 font-display text-3xl font-semibold text-[#1d7d54]"><Wifi className="h-6 w-6" /> 3</p>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="border-t border-[#38bdf8] mt-12 pt-8 text-center text-sm text-gray-300">
-            © 2024 MotiTrack. All rights reserved.
+        </section>
+
+        <section className="px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-[#18271d]">Powerful Features for Peak Performance</h2>
+            <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <article key={feature.title} className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5">
+                    <div className="mb-3 inline-flex rounded-lg bg-[#f0f4f1] p-2 text-[#1d7d54]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <p className="text-base font-semibold text-[#24362c]">{feature.title}</p>
+                    <p className="mt-2 text-sm text-[#76877e]">{feature.description}</p>
+                  </article>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </footer>
-    </Layout>
+        </section>
+
+        <section className="px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-[#18271d]">Trusted by Students and Educators</h2>
+            <div className="mt-5 grid gap-4 md:grid-cols-3">
+              {testimonials.map((item) => (
+                <article key={item.name} className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5">
+                  <p className="text-sm text-[#425248]">"{item.quote}"</p>
+                  <p className="mt-4 text-sm font-semibold text-[#24362c]">{item.name}</p>
+                  <p className="text-xs text-[#76877e]">{item.role}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-[#d3dfd8] bg-gradient-to-br from-[#eef5f0] to-[#fbfcfb] p-8 text-center">
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-[#18271d]">Ready to Transform Your Learning Journey?</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-sm text-[#5f7267]">Start with one dashboard that unifies motivation tracking, wellness support, and career growth.</p>
+            <div className="mt-5 flex justify-center gap-3">
+              <Link to="/auth"><Button className="bg-[#1d7d54] hover:bg-[#145d3f]">Start Your Free Trial</Button></Link>
+              <Link to="/dashboard"><Button variant="outline" className="border-[#d7dfda] text-[#234033] hover:bg-[#f0f4f1]">View Demo Dashboard</Button></Link>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }

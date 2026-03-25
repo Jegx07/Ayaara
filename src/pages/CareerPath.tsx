@@ -1,123 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { CheckCircle2, Circle, Compass, Milestone, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import StudentPortalLayout from '@/components/StudentPortalLayout';
 
-const careerGoal = "Full Stack Developer";
-
-const milestones = [
-  { id: 1, label: "Coding Bootcamp", icon: "💻", completed: true, time: "3 months", checklist: [{ text: "Complete HTML basics", done: true }, { text: "Build a simple website", done: true }, { text: "Learn JavaScript fundamentals", done: true }], resources: [{ label: "freeCodeCamp", link: "https://freecodecamp.org" }, { label: "Codecademy", link: "https://codecademy.com" }] },
-  { id: 2, label: "Portfolio Review", icon: "📁", completed: false, time: "1 week", checklist: [{ text: "Create portfolio website", done: false }, { text: "Upload projects to GitHub", done: false }, { text: "Share on LinkedIn", done: false }], resources: [{ label: "GitHub", link: "https://github.com" }, { label: "LinkedIn", link: "https://linkedin.com" }] },
-  { id: 3, label: "Industry Certification", icon: "🏅", completed: false, time: "2 months", checklist: [{ text: "Choose certification", done: false }, { text: "Complete course", done: false }, { text: "Pass exam", done: false }], resources: [{ label: "Coursera", link: "https://coursera.org" }, { label: "Udemy", link: "https://udemy.com" }] },
-  { id: 4, label: "Internship Search", icon: "🔍", completed: false, time: "1 month", checklist: [{ text: "Update resume", done: false }, { text: "Apply to 10 positions", done: false }, { text: "Prepare cover letters", done: false }], resources: [{ label: "Indeed", link: "https://indeed.com" }, { label: "LinkedIn Jobs", link: "https://linkedin.com/jobs" }] },
-  { id: 5, label: "Mock Interview", icon: "🎤", completed: false, time: "2 weeks", checklist: [{ text: "Practice coding problems", done: false }, { text: "Do mock interviews", done: false }, { text: "Get feedback", done: false }], resources: [{ label: "Pramp", link: "https://pramp.com" }, { label: "LeetCode", link: "https://leetcode.com" }] },
+const pathSteps = [
+  { phase: 'Foundation', item: 'Complete advanced React patterns', progress: 100, done: true },
+  { phase: 'Build', item: 'Ship one full-stack production project', progress: 72, done: false },
+  { phase: 'Validate', item: 'Pass 2 mock interviews', progress: 45, done: false },
+  { phase: 'Launch', item: 'Apply to top 20 internship roles', progress: 30, done: false },
 ];
 
-const motivationalQuotes = [
-  "Every step brings you closer to your dream career!",
-  "Progress is progress, no matter how small.",
-  "You're building the future, one skill at a time.",
-  "Keep going, you're closer than you think.",
-  "Success is the sum of small efforts repeated day in and day out."
-];
-
-const topStudents = [
-  { name: "John Doe", initials: "JD", steps: 5 },
-  { name: "Jane Smith", initials: "JS", steps: 4 },
-  { name: "Alex Johnson", initials: "AJ", steps: 3 },
-];
-
-const CareerPath = () => {
-  const [checkedItems, setCheckedItems] = useState({});
-  const [currentQuote, setCurrentQuote] = useState(0);
-
-  const handleCheck = (milestoneId, itemIndex) => {
-    setCheckedItems(prev => ({
-      ...prev,
-      [milestoneId]: {
-        ...prev[milestoneId],
-        [itemIndex]: !prev[milestoneId]?.[itemIndex]
-      }
-    }));
-  };
-
-  const completedCount = milestones.filter(m => m.completed).length;
-  const progress = Math.round((completedCount / milestones.length) * 100);
-  const currentIndex = milestones.findIndex(m => !m.completed);
-  const nextStep = milestones[currentIndex];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentQuote(prev => (prev + 1) % motivationalQuotes.length);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
+export default function CareerPath() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Progress Bar with Motivational Quote */}
-      <div className="w-full px-6 py-4">
-        <div className="text-center text-xl font-semibold mb-2 text-primary">{progress}% Complete</div>
-        <div className="w-full h-3 rounded-full bg-muted">
-          <div className="h-3 rounded-full bg-primary" style={{ width: `${progress}%` }} />
-        </div>
-        <div className="text-center mt-2 text-muted-foreground italic">
-          {motivationalQuotes[currentQuote]}
-        </div>
-      </div>
-
-      {/* Milestone Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6 px-6 py-8">
-        {milestones.map(ms => (
-          <div className={`rounded-2xl shadow-xl p-6 border-2 ${ms.completed ? 'border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10' : 'border-muted bg-card'}`} key={ms.id}>
-            <div className="flex items-center mb-4">
-              <span className={`text-3xl mr-3 ${ms.completed ? 'text-primary' : 'text-muted-foreground'}`}>{ms.icon}</span>
-              <span className="text-lg font-bold">{ms.label}</span>
-              {ms.completed && <span className="ml-auto bg-primary/10 text-primary text-xs px-2 py-1 rounded">Achieved</span>}
-            </div>
-            <div className="mb-2 text-muted-foreground text-sm">Estimated Time: {ms.time}</div>
-            <ul className="mb-2">
-              {ms.checklist.map((task, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={checkedItems[ms.id]?.[i] || task.done}
-                    onChange={() => handleCheck(ms.id, i)}
-                  />
-                  <span>{task.text}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mb-2 flex gap-3">
-              {ms.resources.map(res => (
-                <a href={res.link} key={res.label} target="_blank" rel="noopener noreferrer" className="bg-secondary px-2 py-1 rounded text-secondary-foreground text-xs">{res.label}</a>
-              ))}
-            </div>
-            <button className="w-full px-4 py-2 bg-primary text-primary-foreground mt-3 rounded-lg" onClick={() => alert(`Chat with mentor for ${ms.label}`)}>Chat Mentor</button>
+    <StudentPortalLayout
+      title="Career Path"
+      subtitle="Track milestones from current skills to your target role"
+      actions={<Button className="bg-[#1d7d54] hover:bg-[#145d3f]">Update Milestones</Button>}
+    >
+      <section className="grid gap-4 lg:grid-cols-3">
+        <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5 lg:col-span-2">
+          <p className="font-display text-xl font-semibold text-[#18271d]">Journey Timeline</p>
+          <div className="mt-4 space-y-3">
+            {pathSteps.map((step) => (
+              <div key={step.item} className="rounded-xl border border-[#e3e9e5] bg-white p-4">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-[#24362c]">
+                    {step.done ? <CheckCircle2 className="h-4 w-4 text-[#1d7d54]" /> : <Circle className="h-4 w-4 text-[#9fb0a7]" />}
+                    {step.item}
+                  </p>
+                  <span className="rounded-md bg-[#f0f4f1] px-2 py-1 text-xs font-semibold text-[#1d7d54]">{step.phase}</span>
+                </div>
+                <Progress value={step.progress} className="h-2 bg-[#e7ece8]" />
+                <p className="mt-2 text-xs text-[#76877e]">Completion: {step.progress}%</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </article>
+
+        <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5">
+          <p className="font-display text-xl font-semibold text-[#18271d]">Target Role</p>
+          <div className="mt-4 space-y-3">
+            <div className="rounded-xl bg-gradient-to-br from-[#1d7d54] to-[#145d3f] p-4 text-white">
+              <p className="text-xs uppercase tracking-wide text-white/80">Career destination</p>
+              <p className="mt-1 font-display text-3xl font-semibold">Software Engineer</p>
+              <p className="mt-1 text-xs text-white/80">Estimated readiness date: Sep 2026</p>
+            </div>
+            <div className="rounded-xl border border-[#e3e9e5] bg-white p-4 text-sm text-[#425248]">
+              <p className="mb-2 font-semibold text-[#24362c]">Next milestone</p>
+              <p className="flex items-center gap-2"><Milestone className="h-4 w-4 text-[#1d7d54]" /> Ship one capstone app with tests</p>
+              <p className="mt-1 flex items-center gap-2"><Compass className="h-4 w-4 text-[#1d7d54]" /> Complete API security checklist</p>
+              <p className="mt-1 flex items-center gap-2"><Star className="h-4 w-4 text-[#1d7d54]" /> Present project in mentor review</p>
+            </div>
+          </div>
+        </article>
       </section>
-
-      {/* Next Step Preview */}
-      {nextStep && (
-        <div className="mt-6 mx-6 p-4 bg-primary/5 text-primary rounded-xl text-center font-medium">
-          Next Up: <span className="font-semibold">{nextStep.label}</span> — {nextStep.label} is your next milestone to unlock.
-        </div>
-      )}
-
-      {/* Leaderboard Panel */}
-      {/* Removed Top Achievers panel as per request */}
-
-      {/* Call-to-Action */}
-      <section className="my-10 px-6 flex flex-col items-center">
-        <h2 className="text-2xl font-bold mb-3 text-primary">Ready for Your Next Milestone?</h2>
-        <button className="px-8 py-3 bg-primary text-primary-foreground rounded-xl shadow-lg text-lg">Start Now</button>
-      </section>
-
-      {/* Footer */}
-      <footer className="w-full bg-muted py-6 mt-12 flex flex-col items-center">
-        <div className="mb-2 text-muted-foreground">Need Help? <a href="/contact" className="text-primary">Contact Us</a></div>
-        <div className="text-muted-foreground text-xs">© 2025 CareerPath • Accessibility • Privacy Policy</div>
-      </footer>
-    </div>
+    </StudentPortalLayout>
   );
-};
-
-export default CareerPath;
+}

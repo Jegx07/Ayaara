@@ -129,32 +129,32 @@ export default function Dashboard() {
             </span>
           </Link>
           <Link
-            to="/tasks"
+            to="/skills"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
           >
             <FolderKanban className="h-4 w-4" />
-            Tasks
+            Skill Assessment
           </Link>
           <Link
-            to="/calendar"
+            to="/career"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
           >
             <CalendarDays className="h-4 w-4" />
-            Calendar
+            Career Assistant
           </Link>
           <Link
-            to="/analytics"
+            to="/career-path"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
           >
             <TrendingUp className="h-4 w-4" />
-            Analytics
+            Career Path
           </Link>
           <Link
-            to="/team"
+            to="/iot"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
           >
             <Users className="h-4 w-4" />
-            Team
+            IoT Devices
           </Link>
         </nav>
 
@@ -168,11 +168,18 @@ export default function Dashboard() {
             Settings
           </Link>
           <Link
-            to="/help"
+            to="/mental-support"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
           >
             <CircleHelp className="h-4 w-4" />
-            Help
+            Mental Support
+          </Link>
+          <Link
+            to="/profile"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
+          >
+            <Users className="h-4 w-4" />
+            Profile
           </Link>
           <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]">
             <LogOut className="h-4 w-4" />
