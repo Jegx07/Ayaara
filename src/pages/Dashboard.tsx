@@ -1,508 +1,253 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  ArrowUpRight,
   Bell,
-  CalendarDays,
-  CircleHelp,
-  Clock3,
-  FolderKanban,
+  ChartNoAxesCombined,
+  CircleDollarSign,
+  CreditCard,
   LayoutDashboard,
   LogOut,
-  Pause,
-  Play,
   Search,
   Settings,
-  Target,
-  TrendingUp,
-  Users,
-  Heart,
-  Zap,
-  Flame,
-  MessageSquare,
-  BookOpen,
-  Lightbulb,
-  Briefcase,
-  Send,
-  Plus,
+  Wallet,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 
+const financeStats = [
+  { title: 'Total balance', value: '$67,290', note: '+2.3% for last week', highlighted: true },
+  { title: 'Income', value: '+456$', note: 'The week income', trend: '+1.2%' },
+  { title: 'Outcome', value: '-1,256$', note: 'The week outcome', trend: '-3.2%' },
+];
+
+const breakdown = [
+  { label: 'Cost', value: 78 },
+  { label: 'Net profit', value: 88 },
+  { label: 'Shipping', value: 46 },
+  { label: 'Tax', value: 61 },
+  { label: 'PayPal fees', value: 35 },
+];
+
+const revenueFlow = [120, 210, 145, 188, 132, 97, 165];
+
+const transactions = [
+  { name: 'Starbucks', detail: 'Drinks & Food', amount: '-$5.90', positive: false },
+  { name: 'Alias Bonny', detail: 'Transfer', amount: '+$56.00', positive: true },
+  { name: 'Chris Alin', detail: 'Transfer', amount: '+$19,956.00', positive: true },
+  { name: 'Starbucks', detail: 'Drinks & Food', amount: '-$5.90', positive: false },
+  { name: 'Chris Alin', detail: 'Transfer', amount: '+$64.90', positive: true },
+];
+
+const donutSegments = [40, 20, 17, 23];
+
+const navItems = [
+  { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+  { label: 'My wallet', path: '/skills', icon: Wallet },
+  { label: 'Transactions', path: '/career', icon: CircleDollarSign },
+  { label: 'Statistics', path: '/career-path', icon: ChartNoAxesCombined },
+  { label: 'Setting', path: '/settings', icon: Settings },
+];
+
 export default function Dashboard() {
-  const [selectedMood, setSelectedMood] = useState<string | null>(null);
-
-  // Health Metrics
-  const healthMetrics = [
-    { label: 'Motivation', value: '85%', trend: '+5%', icon: Flame, highlighted: true },
-    { label: 'Focus Score', value: '88%', trend: '+2%', icon: Zap, highlighted: false },
-    { label: 'Study Streak', value: '12', trend: 'days', icon: Target, highlighted: false },
-    { label: 'Heart Rate', value: '72', trend: 'bpm', icon: Heart, highlighted: false },
-  ];
-
-  // Analytics Data
-  const motivationIndex = [
-    { day: 'Mon', score: 78 },
-    { day: 'Tue', score: 82 },
-    { day: 'Wed', score: 73 },
-    { day: 'Thu', score: 88 },
-    { day: 'Fri', score: 92 },
-    { day: 'Sat', score: 85 },
-    { day: 'Sun', score: 79 },
-  ];
-
-  const vitalSigns = [
-    { time: '08:00', heartRate: 68, focusScore: 75 },
-    { time: '12:00', heartRate: 72, focusScore: 88 },
-    { time: '16:00', heartRate: 70, focusScore: 82 },
-    { time: '20:00', heartRate: 66, focusScore: 79 },
-  ];
-
-  const studyHours = [
-    { day: 'Mon', study: 6.5, focus: 5.2 },
-    { day: 'Tue', study: 7.0, focus: 5.8 },
-    { day: 'Wed', study: 5.5, focus: 4.2 },
-    { day: 'Thu', study: 8.0, focus: 6.5 },
-    { day: 'Fri', study: 7.5, focus: 6.0 },
-    { day: 'Sat', study: 4.0, focus: 3.0 },
-    { day: 'Sun', study: 3.5, focus: 2.8 },
-  ];
-
-  // Mood Options
-  const moodOptions = [
-    { emoji: '😰', label: 'Anxious' },
-    { emoji: '😠', label: 'Stressed' },
-    { emoji: '💪', label: 'Motivated' },
-    { emoji: '🧘', label: 'Calm' },
-    { emoji: '😊', label: 'Happy' },
-    { emoji: '😢', label: 'Tired' },
-  ];
-
-  // Gamification
-  const leaderboard = [
-    { rank: 1, name: 'You', points: 2750, tone: 'Gold' },
-    { rank: 2, name: 'Alice', points: 2480, tone: 'Silver' },
-    { rank: 3, name: 'Bob', points: 2120, tone: 'Bronze' },
-  ];
-
-  // Resources
-  const resources = [
-    { icon: '🧘', label: 'Guided Meditation', description: '10-15 min sessions' },
-    { icon: '📊', label: 'Productivity Templates', description: 'Planning tools' },
-    { icon: '💡', label: 'Stress Management', description: 'Techniques & tips' },
-    { icon: '⏰', label: 'Time Management', description: 'Study schedules' },
-  ];
-
-  // Community Forum
-  const forumDiscussions = [
-    { title: 'How stay motivated during exams?', replies: 24 },
-    { title: 'Tips for improving sleep schedule', replies: 18 },
-  ];
-
-  // Notifications
-  const notifications = [
-    { type: 'reminder', title: 'Time for a break', emoji: '⏱️' },
-    { type: 'session', title: 'Mentor session available', emoji: '👨‍🏫' },
-    { type: 'tip', title: 'Daily wellness tip ready', emoji: '💡' },
-  ];
+  const location = useLocation();
 
   return (
-    <div className="flex min-h-screen bg-[#f6f8f6]">
-      {/* Sidebar */}
-      <aside className="w-64 border-r border-[#e1e8e3] bg-[#fbfcfb] p-6">
-        <div className="mb-8 flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#1d7d54] to-[#145d3f]" />
-          <span className="font-display text-lg font-semibold text-[#18271d]">Ayaara</span>
+    <div className="relative flex min-h-screen overflow-hidden bg-[#edf1fb] text-[#23243a]">
+      <div className="pointer-events-none absolute left-[-120px] top-[60%] h-72 w-72 rounded-full bg-[#d8dcff] blur-3xl" />
+      <div className="pointer-events-none absolute right-[-80px] top-10 h-72 w-72 rounded-full bg-[#edd8ff] blur-3xl" />
+
+      <aside className="relative z-10 hidden w-64 border-r border-white/60 bg-white/55 p-6 backdrop-blur-xl lg:block">
+        <div className="mb-10 flex items-center gap-2">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#6f63ff] to-[#4a50cf]" />
+          <span className="font-display text-[34px] font-semibold tracking-[-0.04em] text-[#1f2550]">MoneyLot</span>
         </div>
 
-        <nav className="mb-8 space-y-2">
-          <Link
-            to="/dashboard"
-            className="flex items-center gap-3 rounded-lg bg-[#f0f4f1] px-3 py-2 text-sm font-medium text-[#1d7d54]"
-          >
-            <LayoutDashboard className="h-4 w-4" />
-            Dashboard
-            <span className="ml-auto rounded bg-[#1d7d54] px-2 py-1 text-xs font-semibold text-white">
-              12
-            </span>
-          </Link>
-          <Link
-            to="/skills"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
-          >
-            <FolderKanban className="h-4 w-4" />
-            Skill Assessment
-          </Link>
-          <Link
-            to="/career"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
-          >
-            <CalendarDays className="h-4 w-4" />
-            Career Assistant
-          </Link>
-          <Link
-            to="/career-path"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
-          >
-            <TrendingUp className="h-4 w-4" />
-            Career Path
-          </Link>
-          <Link
-            to="/iot"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
-          >
-            <Users className="h-4 w-4" />
-            IoT Devices
-          </Link>
+        <nav className="space-y-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = location.pathname === item.path;
+
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={cn(
+                  'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
+                  active
+                    ? 'bg-[#edf0ff] text-[#4f56cb]'
+                    : 'text-[#7b84a7] hover:bg-[#edf0ff] hover:text-[#4f56cb]',
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="border-t border-[#dde3df] pt-4">
-          <div className="mb-3 space-y-1 text-xs font-medium uppercase text-[#a7b6ae]">General</div>
-          <Link
-            to="/settings"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
-          >
-            <Settings className="h-4 w-4" />
-            Settings
-          </Link>
-          <Link
-            to="/mental-support"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
-          >
-            <CircleHelp className="h-4 w-4" />
-            Mental Support
-          </Link>
-          <Link
-            to="/profile"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
-          >
-            <Users className="h-4 w-4" />
-            Profile
-          </Link>
-          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]">
-            <LogOut className="h-4 w-4" />
-            Logout
-          </button>
-        </div>
-
-        {/* Focus Sprint Card */}
-        <div className="mt-8 overflow-hidden rounded-2xl bg-gradient-to-br from-[#1d7d54] to-[#145d3f] p-4 text-white">
-          <p className="font-display text-sm font-semibold">Enter Focus Mode</p>
-          <p className="mt-1 text-xs opacity-90">Start your study sprint</p>
-          <button className="mt-3 w-full rounded-lg bg-white/20 py-2 text-xs font-semibold hover:bg-white/30">
-            Start Sprint
-          </button>
-        </div>
+        <Link
+          to="/auth"
+          className="mt-24 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#7b84a7] transition-colors hover:bg-[#edf0ff] hover:text-[#4f56cb]"
+        >
+          <LogOut className="h-4 w-4" />
+          Log Out
+        </Link>
       </aside>
 
-      {/* Main Content */}
-      <div className="flex-1">
-        {/* Header */}
-        <header className="sticky top-0 border-b border-[#e1e8e3] bg-[#fbfcfb] px-8 py-4">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-1 items-center gap-2 rounded-lg border border-[#e1e8e3] bg-white px-3 py-2">
-              <Search className="h-4 w-4 text-[#a7b6ae]" />
+      <div className="relative z-10 flex-1 p-4 sm:p-6">
+        <div className="mx-auto max-w-[1220px] rounded-[28px] border border-white/70 bg-white/45 p-4 shadow-[0_20px_60px_rgba(62,79,150,0.15)] backdrop-blur-xl sm:p-6">
+          <header className="mb-5 flex items-center gap-3">
+            <div className="flex flex-1 items-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-2">
+              <Search className="h-4 w-4 text-[#a4abcb]" />
               <Input
-                placeholder="Search tasks, projects..."
-                className="border-0 bg-transparent text-sm placeholder-[#a7b6ae] focus:outline-none focus:ring-0"
+                placeholder="Search"
+                className="h-auto border-0 bg-transparent p-0 text-sm text-[#2a3160] placeholder-[#a4abcb] focus-visible:ring-0"
               />
             </div>
-            <button className="relative rounded-lg p-2 hover:bg-[#f0f4f1]">
-              <Bell className="h-5 w-5 text-[#76877e]" />
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-rose-500" />
+            <button className="rounded-full border border-white/70 bg-white/65 p-2 hover:bg-white">
+              <Bell className="h-5 w-5 text-[#66709f]" />
             </button>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#1d7d54] to-[#145d3f] text-xs font-semibold text-white">
+            <button className="rounded-full border border-white/70 bg-white/65 p-2 hover:bg-white">
+              <Settings className="h-5 w-5 text-[#66709f]" />
+            </button>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#6f63ff] to-[#4a50cf] text-xs font-semibold text-white">
               JD
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Main Content Area */}
-        <main className="overflow-y-auto p-8">
-          {/* Health Metrics */}
-          <section className="mb-8">
-            <div className="grid gap-4 2xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
-              {healthMetrics.map((metric) => {
-                const Icon = metric.icon;
-                return (
-                  <article
-                    key={metric.label}
-                    className={cn(
-                      'rounded-2xl border p-4',
-                      metric.highlighted
-                        ? 'border-[#1d7d54] bg-gradient-to-br from-[#f6f8f6] to-[#fbfcfb]'
-                        : 'border-[#dde3df] bg-[#fbfcfb]',
-                    )}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-[#76877e]">{metric.label}</p>
-                        <p className="font-display text-[32px] font-semibold leading-none text-[#18271d]">
-                          {metric.value}
-                        </p>
-                        <p className="mt-2 text-xs text-[#1d7d54]">{metric.trend}</p>
-                      </div>
-                      <div
-                        className={cn(
-                          'flex h-10 w-10 items-center justify-center rounded-lg',
-                          metric.highlighted ? 'bg-[#1d7d54] text-white' : 'bg-[#f0f4f1] text-[#1d7d54]',
-                        )}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
+          <h1 className="mb-4 font-display text-5xl font-semibold tracking-[-0.04em] text-[#242743]">Dashboard</h1>
 
-          {/* Analytics Charts */}
-          <section className="mb-8">
-            <div className="grid gap-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-              {/* Motivation Index */}
-              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-                <p className="font-display text-lg font-semibold text-[#18271d]">Motivation Index</p>
-                <p className="mt-1 text-xs text-[#7d8c84]">7-day trend</p>
-                <div className="mt-4 flex items-end justify-between gap-1 h-24">
-                  {motivationIndex.map((item) => (
-                    <div key={item.day} className="flex flex-col items-center gap-1 flex-1">
-                      <div
-                        className="w-full rounded-t-sm bg-gradient-to-t from-[#1d7d54] to-[#2e9e68]"
-                        style={{ height: `${(item.score / 100) * 80}px` }}
-                      />
-                      <span className="text-[10px] font-medium text-[#76877e]">{item.day}</span>
-                    </div>
-                  ))}
+          <div className="grid gap-4 lg:grid-cols-12">
+            <section className="space-y-4 lg:col-span-8">
+              <article className="rounded-3xl border border-white/70 bg-gradient-to-br from-[#f2f4ff] to-[#f9f7e7] p-5">
+                <p className="text-sm text-[#6f78a0]">{financeStats[0].title}</p>
+                <p className="mt-1 font-display text-[58px] font-semibold leading-none tracking-[-0.05em] text-[#2a2f4e]">{financeStats[0].value}</p>
+                <p className="mt-1 text-sm text-[#7480ab]">{financeStats[0].note}</p>
+                <div className="mt-4 flex gap-2">
+                  <button className="rounded-full border border-white/80 bg-white/85 px-6 py-2 text-sm font-semibold text-[#4f56cb]">Transfer</button>
+                  <button className="rounded-full border border-white/80 bg-white/85 px-6 py-2 text-sm font-semibold text-[#6a709c]">Swap</button>
                 </div>
               </article>
 
-              {/* Vital Signs */}
-              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-                <p className="font-display text-lg font-semibold text-[#18271d]">Vital Signs</p>
-                <p className="mt-1 text-xs text-[#7d8c84]">Heart rate vs Focus</p>
-                <div className="mt-4 space-y-3">
-                  {vitalSigns.map((item) => (
-                    <div key={item.time} className="flex items-center justify-between">
-                      <span className="text-xs text-[#76877e]">{item.time}</span>
-                      <div className="flex gap-2">
-                        <div className="flex items-center gap-1">
-                          <div
-                            className="rounded-sm bg-rose-500"
-                            style={{ width: `${item.heartRate / 2}px`, height: '6px' }}
-                          />
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <div
-                            className="rounded-sm bg-[#1d7d54]"
-                            style={{ width: `${item.focusScore / 2}px`, height: '6px' }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </article>
-
-              {/* Study Hours */}
-              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-                <p className="font-display text-lg font-semibold text-[#18271d]">Study vs Focus</p>
-                <p className="mt-1 text-xs text-[#7d8c84]">Weekly comparison</p>
-                <div className="mt-4 flex items-end justify-between gap-1 h-24">
-                  {studyHours.map((item) => (
-                    <div key={item.day} className="flex flex-col items-center gap-1 flex-1">
-                      <div className="flex w-full gap-0.5">
-                        <div
-                          className="flex-1 rounded-t-sm bg-amber-400"
-                          style={{ height: `${(item.study / 8) * 80}px` }}
-                        />
-                        <div
-                          className="flex-1 rounded-t-sm bg-[#1d7d54]"
-                          style={{ height: `${(item.focus / 8) * 80}px` }}
-                        />
-                      </div>
-                      <span className="text-[10px] font-medium text-[#76877e]">{item.day}</span>
-                    </div>
-                  ))}
-                </div>
-              </article>
-            </div>
-          </section>
-
-          {/* Mood Detection */}
-          <section className="mb-8">
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <p className="font-display text-lg font-semibold text-[#18271d]">How are you feeling?</p>
-              <p className="mt-1 text-xs text-[#7d8c84]">Select your current mood</p>
-              <div className="mt-4 flex gap-3">
-                {moodOptions.map((mood) => (
-                  <button
-                    key={mood.label}
-                    onClick={() => setSelectedMood(mood.label)}
-                    className={cn(
-                      'flex flex-col items-center gap-1 rounded-lg p-3 text-2xl transition-all',
-                      selectedMood === mood.label
-                        ? 'border-2 border-[#1d7d54] bg-[#f0f4f1]'
-                        : 'border border-[#dde3df] hover:bg-[#f8faf8]',
-                    )}
-                  >
-                    {mood.emoji}
-                    <span className="text-[10px] font-medium text-[#76877e]">{mood.label}</span>
-                  </button>
-                ))}
-              </div>
-            </article>
-          </section>
-
-          {/* Gamification & Coaching */}
-          <section className="mb-8 grid gap-4 lg:grid-cols-2 md:grid-cols-1">
-            {/* Gamification */}
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <p className="font-display text-lg font-semibold text-[#18271d]">Falling Leaves Challenge</p>
-              <p className="mt-1 text-xs text-[#7d8c84]">Earn points and streaks</p>
-              <div className="mt-4 grid grid-cols-2 gap-4">
-                <div className="rounded-lg bg-gradient-to-br from-[#1d7d54]/10 to-[#2e9e68]/10 p-3">
-                  <p className="text-xs text-[#76877e]">Score</p>
-                  <p className="font-display text-2xl font-semibold text-[#1d7d54]">1,240</p>
-                </div>
-                <div className="rounded-lg bg-gradient-to-br from-amber-500/10 to-amber-600/10 p-3">
-                  <p className="text-xs text-[#76877e]">Streak</p>
-                  <p className="font-display text-2xl font-semibold text-amber-600">8 days</p>
-                </div>
-              </div>
-              <button className="mt-4 w-full rounded-lg bg-[#1d7d54] py-2 text-sm font-semibold text-white hover:bg-[#145d3f] flex items-center justify-center gap-2">
-                <Play className="h-4 w-4" /> Play Now
-              </button>
-
-              {/* Leaderboard */}
-              <div className="mt-5 space-y-2 border-t border-[#dde3df] pt-4">
-                <p className="text-xs font-semibold uppercase text-[#a7b6ae]">Leaderboard</p>
-                {leaderboard.map((entry) => (
-                  <div key={entry.rank} className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="h-6 w-6 rounded-full bg-[#f0f4f1] text-center text-xs font-semibold text-[#1d7d54]">
-                        {entry.rank}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {financeStats.slice(1).map((item) => (
+                  <article key={item.title} className="rounded-3xl border border-white/70 bg-white/75 p-5">
+                    <div className="mb-2 flex items-center justify-between">
+                      <p className="text-sm text-[#6f78a0]">{item.title}</p>
+                      <span className={cn('rounded-full px-2 py-1 text-xs font-semibold', item.trend?.startsWith('+') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-600')}>
+                        {item.trend}
                       </span>
-                      <span className="text-sm font-medium text-[#18271d]">{entry.name}</span>
                     </div>
-                    <span className="font-semibold text-[#1d7d54]">{entry.points}</span>
-                  </div>
+                    <p className="font-display text-[42px] font-semibold leading-none tracking-[-0.04em] text-[#2a2f4e]">{item.value}</p>
+                    <p className="mt-2 text-sm text-[#7480ab]">{item.note}</p>
+                  </article>
                 ))}
               </div>
-            </article>
 
-            {/* Coaching */}
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <div className="grid gap-3">
-                {/* Mentor Feedback */}
-                <div className="rounded-lg border border-[#dde3df] bg-white p-3">
-                  <p className="text-xs font-semibold text-[#76877e]">Mentor Feedback</p>
-                  <textarea
-                    placeholder="Share your thoughts..."
-                    className="mt-2 w-full rounded-lg border border-[#dde3df] bg-[#f8faf8] px-3 py-2 text-sm placeholder-[#a7b6ae] focus:border-[#1d7d54] focus:outline-none"
-                    rows={4}
-                  />
-                  <button className="mt-2 rounded-lg bg-[#1d7d54] px-3 py-2 text-sm font-semibold text-white hover:bg-[#145d3f] flex items-center gap-2">
-                    <Send className="h-4 w-4" /> Send Response
-                  </button>
-                </div>
-
-                {/* AI Coach */}
-                <div className="rounded-lg bg-gradient-to-br from-[#1d7d54]/10 to-[#2e9e68]/10 p-3">
-                  <p className="text-xs font-semibold text-[#1d7d54]">AI Coach Daily Habit</p>
-                  <p className="mt-2 italic text-sm text-[#18271d]">"Progress is not perfection. Focus on consistency."</p>
-                  <p className="mt-2 text-xs text-[#76877e]">💡 Today's habit: Take 5-minute breaks every hour</p>
-                </div>
-              </div>
-            </article>
-          </section>
-
-          {/* Resources & Community */}
-          <section className="mb-8 grid gap-4 lg:grid-cols-2 md:grid-cols-1">
-            {/* Resources */}
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <p className="font-display text-lg font-semibold text-[#18271d]">Resources Hub</p>
-              <p className="mt-1 text-xs text-[#7d8c84]">Tools to boost productivity</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                {resources.map((resource) => (
-                  <button
-                    key={resource.label}
-                    className="rounded-lg border border-[#dde3df] bg-white p-3 text-left hover:border-[#1d7d54] hover:bg-[#f8faf8] transition-colors"
-                  >
-                    <p className="text-xl">{resource.icon}</p>
-                    <p className="mt-1 text-sm font-semibold text-[#18271d]">{resource.label}</p>
-                    <p className="text-xs text-[#76877e]">{resource.description}</p>
-                  </button>
-                ))}
-              </div>
-            </article>
-
-            {/* Community Forum */}
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <p className="font-display text-lg font-semibold text-[#18271d]">Community Forum</p>
-              <p className="mt-1 text-xs text-[#7d8c84]">Connect with peers</p>
-              <div className="mt-4 space-y-3">
-                {forumDiscussions.map((discussion, idx) => (
-                  <div key={idx} className="rounded-lg border border-[#dde3df] bg-white p-3">
-                    <p className="text-sm font-semibold text-[#18271d]">{discussion.title}</p>
-                    <p className="mt-1 text-xs text-[#76877e]">{discussion.replies} replies</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
+                  <div className="mb-3 flex items-center justify-between">
+                    <p className="text-sm font-semibold text-[#2b3156]">Expense split</p>
+                    <button className="text-xs font-semibold text-[#4f56cb]">Show more</button>
                   </div>
-                ))}
-                <button className="w-full rounded-lg bg-[#1d7d54] py-2 text-sm font-semibold text-white hover:bg-[#145d3f]">
-                  Join Discussion
-                </button>
-              </div>
-            </article>
-          </section>
-
-          {/* Career & Notifications */}
-          <section className="mb-8 grid gap-4 lg:grid-cols-2 md:grid-cols-1">
-            {/* Career Tracker */}
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <p className="font-display text-lg font-semibold text-[#18271d]">Career Tracker</p>
-              <p className="mt-1 text-xs text-[#7d8c84]">Current goal progress</p>
-              <div className="mt-4 space-y-3">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold text-[#18271d]">Software Engineer</p>
-                    <span className="text-xs font-semibold text-[#1d7d54]">75%</span>
-                  </div>
-                  <Progress value={75} className="mt-2 h-2 bg-[#e7ece8]" />
-                </div>
-                <div className="flex gap-2 pt-2">
-                  <button className="flex-1 rounded-lg border border-[#1d7d54] px-3 py-2 text-xs font-semibold text-[#1d7d54] hover:bg-[#f0f4f1]">
-                    <Plus className="h-4 w-4 inline mr-1" /> Add Internship
-                  </button>
-                  <button className="flex-1 rounded-lg bg-[#1d7d54] px-3 py-2 text-xs font-semibold text-white hover:bg-[#145d3f]">
-                    View Path
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            {/* Notifications Feed */}
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <p className="font-display text-lg font-semibold text-[#18271d]">Notifications</p>
-              <p className="mt-1 text-xs text-[#7d8c84]">Recent updates</p>
-              <div className="mt-4 space-y-3">
-                {notifications.map((notif, idx) => (
-                  <div key={idx} className="flex items-start justify-between rounded-lg border border-[#dde3df] bg-white p-3">
-                    <div className="flex gap-2">
-                      <span className="text-lg">{notif.emoji}</span>
-                      <div>
-                        <p className="text-sm font-semibold text-[#18271d]">{notif.title}</p>
-                        <p className="text-xs text-[#76877e]">Just now</p>
+                  <p className="text-xs text-[#7d86ad]">The amount of money that was spent from the card for last 4 weeks</p>
+                  <div className="mt-4 flex items-center gap-4">
+                    <div
+                      className="h-36 w-36 rounded-full"
+                      style={{
+                        background: `conic-gradient(#a99aff 0deg ${donutSegments[0] * 3.6}deg, #7ccdf7 ${donutSegments[0] * 3.6}deg ${(donutSegments[0] + donutSegments[1]) * 3.6}deg, #ffd369 ${(donutSegments[0] + donutSegments[1]) * 3.6}deg ${(donutSegments[0] + donutSegments[1] + donutSegments[2]) * 3.6}deg, #d7deff ${(donutSegments[0] + donutSegments[1] + donutSegments[2]) * 3.6}deg 360deg)`,
+                      }}
+                    >
+                      <div className="m-[22px] flex h-[92px] w-[92px] items-center justify-center rounded-full bg-white text-center">
+                        <div>
+                          <p className="text-xs text-[#7b84a7]">Total</p>
+                          <p className="font-display text-2xl font-semibold text-[#2a2f4e]">2,456$</p>
+                        </div>
                       </div>
                     </div>
-                    <button className="text-xs font-semibold text-[#1d7d54] hover:underline">View</button>
+                    <div className="space-y-1 text-xs text-[#66709f]">
+                      <p>Bills 40%</p>
+                      <p>Food 20%</p>
+                      <p>Healthcare 17%</p>
+                      <p>Other 23%</p>
+                    </div>
                   </div>
-                ))}
+                </article>
+
+                <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
+                  <p className="text-sm font-semibold text-[#2b3156]">Revenue flow</p>
+                  <p className="mt-1 text-xs text-[#7d86ad]">The amount of money that was involved in financial assets</p>
+                  <div className="mt-6 flex h-40 items-end justify-between gap-2">
+                    {revenueFlow.map((val, idx) => (
+                      <div key={idx} className="flex flex-1 flex-col items-center gap-1">
+                        <div className="w-full rounded-full bg-[#e5e8f8]" style={{ height: `${val}px`, maxHeight: '130px' }}>
+                          <div className="w-full rounded-full bg-gradient-to-t from-[#787cff] to-[#a9adff]" style={{ height: `${Math.max(val - 56, 24)}px` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
               </div>
-            </article>
-          </section>
-        </main>
+            </section>
+
+            <section className="space-y-4 lg:col-span-4">
+              <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
+                <p className="mb-3 text-sm font-semibold text-[#2b3156]">Abandonment rate</p>
+                <p className="text-xs text-rose-500">-1.3% compare to the last week</p>
+                <div className="mt-4 space-y-2">
+                  {breakdown.map((item) => (
+                    <div key={item.label}>
+                      <div className="mb-1 flex items-center justify-between text-xs text-[#727ba2]">
+                        <span>{item.label}</span>
+                        <span>{item.value}%</span>
+                      </div>
+                      <Progress value={item.value} className="h-2 bg-[#ebeef9]" />
+                    </div>
+                  ))}
+                </div>
+              </article>
+
+              <article className="rounded-3xl border border-white/70 bg-gradient-to-br from-[#f1f3ff] to-[#d6f5f1] p-5">
+                <p className="text-sm font-semibold text-[#2b3156]">My cards (3)</p>
+                <div className="mt-3 space-y-[-16px]">
+                  <div className="rounded-2xl bg-gradient-to-r from-[#4540bb] to-[#7f79f0] p-4 text-white">
+                    <p className="text-xs opacity-80">VISA</p>
+                    <p className="mt-2 font-display text-xl">4567 7778 9907 8362</p>
+                  </div>
+                  <div className="ml-2 rounded-2xl bg-gradient-to-r from-[#46b9d7] to-[#79d4d1] p-4 text-white">
+                    <p className="text-xs opacity-80">VISA</p>
+                    <p className="mt-2 font-display text-xl">•••• •••• •••• 4221</p>
+                  </div>
+                  <div className="ml-4 rounded-2xl bg-gradient-to-r from-[#dff9f4] to-[#d6eef1] p-4">
+                    <p className="text-sm text-[#2b3156]">Anny Gomez</p>
+                    <p className="font-display text-lg text-[#25304f]">4567 7778 9907 8362</p>
+                  </div>
+                </div>
+              </article>
+
+              <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
+                <div className="mb-3 flex items-center justify-between">
+                  <p className="text-sm font-semibold text-[#2b3156]">Last transactions</p>
+                  <button className="text-xs font-semibold text-[#4f56cb]">All</button>
+                </div>
+                <div className="space-y-3">
+                  {transactions.map((t, idx) => (
+                    <div key={`${t.name}-${idx}`} className="flex items-center justify-between rounded-xl bg-white/70 px-3 py-2">
+                      <div>
+                        <p className="text-sm font-medium text-[#2b3156]">{t.name}</p>
+                        <p className="text-xs text-[#7a84aa]">{t.detail}</p>
+                      </div>
+                      <p className={cn('text-sm font-semibold', t.positive ? 'text-emerald-600' : 'text-rose-500')}>
+                        {t.amount}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            </section>
+          </div>
+        </div>
       </div>
     </div>
   );

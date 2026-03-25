@@ -10,25 +10,27 @@ export default function Auth() {
   const [role, setRole] = useState<'student'|'professor'>('student');
 
   return (
-    <div className="relative min-h-screen bg-[#f6f8f6]">
+    <div className="relative min-h-screen bg-[#edf1fb] text-[#222741]">
+      <div className="pointer-events-none absolute left-0 top-0 h-72 w-72 rounded-full bg-[#d9ddff] blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#f1dcff] blur-3xl" />
       {/* Premium Header */}
-      <div className="absolute top-0 left-0 right-0 z-10 border-b border-[#e1e8e3] bg-[#fbfcfb]/80 backdrop-blur-md">
+      <div className="absolute top-0 left-0 right-0 z-10 border-b border-white/70 bg-white/55 backdrop-blur-xl">
         <div className="flex h-16 items-center justify-between px-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#1d7d54] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6f63ff] to-[#4a50cf] flex items-center justify-center">
               <span className="text-white font-bold text-sm">A</span>
             </div>
-            <span className="font-display font-bold text-[#18271d] text-lg">Ayaara</span>
+            <span className="font-display font-bold text-[#222741] text-lg">Ayaara</span>
           </div>
           
           {/* Role Selector */}
-          <div className="flex items-center gap-3 bg-white rounded-full p-1.5 border border-[#e1e8e3]">
+          <div className="flex items-center gap-3 bg-white/80 rounded-full p-1.5 border border-white/80 backdrop-blur-md">
             <button
               onClick={() => setRole('student')}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                 role === 'student'
-                  ? 'bg-[#1d7d54] text-white'
-                  : 'text-[#76877e] hover:text-[#18271d]'
+                  ? 'bg-[#5c5fdc] text-white'
+                  : 'text-[#6c76a6] hover:text-[#222741]'
               }`}
             >
               Student
@@ -37,8 +39,8 @@ export default function Auth() {
               onClick={() => setRole('professor')}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                 role === 'professor'
-                  ? 'bg-[#1d7d54] text-white'
-                  : 'text-[#76877e] hover:text-[#18271d]'
+                  ? 'bg-[#5c5fdc] text-white'
+                  : 'text-[#6c76a6] hover:text-[#222741]'
               }`}
             >
               Professor
@@ -48,7 +50,7 @@ export default function Auth() {
           {/* Continue Button */}
           <button
             onClick={() => navigate(role === 'student' ? '/student' : '/professor')}
-            className="px-6 py-2 rounded-full bg-[#1d7d54] text-white text-sm font-semibold hover:bg-[#145d3f] transition-colors ml-4"
+            className="px-6 py-2 rounded-full bg-[#5c5fdc] text-white text-sm font-semibold hover:bg-[#4a50cf] transition-colors ml-4"
           >
             Continue →
           </button>
@@ -70,7 +72,7 @@ export default function Auth() {
       </div>
 
       {/* Decorative footer */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#e8ede9]/20 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#dfe5ff]/30 to-transparent pointer-events-none" />
     </div>
   );
 }
