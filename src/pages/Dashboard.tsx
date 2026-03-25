@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   ArrowUpRight,
@@ -16,271 +16,307 @@ import {
   Target,
   TrendingUp,
   Users,
+  Heart,
+  Zap,
+  Flame,
+  MessageSquare,
+  BookOpen,
+  Lightbulb,
+  Briefcase,
+  Send,
+  Plus,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 
-const navItems = [
-  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, badge: '' },
-  { label: 'Tasks', href: '/skills', icon: FolderKanban, badge: '12' },
-  { label: 'Calendar', href: '/career', icon: CalendarDays, badge: '' },
-  { label: 'Analytics', href: '/career-path', icon: TrendingUp, badge: '' },
-  { label: 'Team', href: '/mental-support', icon: Users, badge: '' },
-];
-
-const generalItems = [
-  { label: 'Settings', href: '/settings', icon: Settings },
-  { label: 'Help', href: '/profile', icon: CircleHelp },
-  { label: 'Logout', href: '/auth', icon: LogOut },
-];
-
-const kpis = [
-  { label: 'Total projects', value: '24', note: 'Increased from last month', highlighted: true },
-  { label: 'Ended projects', value: '10', note: 'Increased from last month', highlighted: false },
-  { label: 'Running projects', value: '12', note: 'Increased from last month', highlighted: false },
-  { label: 'Pending project', value: '2', note: 'In discuss', highlighted: false },
-];
-
-const analytics = [
-  { day: 'S', score: 58, striped: true },
-  { day: 'M', score: 82, striped: false },
-  { day: 'T', score: 74, striped: false },
-  { day: 'W', score: 88, striped: false },
-  { day: 'T', score: 52, striped: true },
-  { day: 'F', score: 56, striped: true },
-  { day: 'S', score: 66, striped: true },
-];
-
-const teamCollaboration = [
-  {
-    name: 'Alexandra Deff',
-    task: 'Working on GitHub project repository',
-    status: 'Completed',
-    tone: 'emerald',
-  },
-  {
-    name: 'Edwin Adenike',
-    task: 'Working on user authentication system',
-    status: 'In progress',
-    tone: 'amber',
-  },
-  {
-    name: 'Isaac Oluwatermilun',
-    task: 'Working on search and filter functionality',
-    status: 'Pending',
-    tone: 'rose',
-  },
-  {
-    name: 'David Oshodi',
-    task: 'Working on responsive layout for homepage',
-    status: 'In progress',
-    tone: 'amber',
-  },
-];
-
-const reminder = {
-  title: 'Meeting with mentor',
-  subtitle: 'Career Lab',
-  time: '10:00 pm - 04:00 pm',
-};
-
-const projectItems = [
-  'Develop API endpoints',
-  'Onboarding flow',
-  'Build dashboard',
-  'Optimize page load',
-  'Cross-browser testing',
-];
-
-const motivationStatuses = [
-  { name: 'Completed', value: 41, tone: 'bg-emerald-700' },
-  { name: 'In progress', value: 37, tone: 'bg-emerald-500' },
-  { name: 'Pending', value: 22, tone: 'bg-slate-300' },
-];
-
-const completion = 41;
-
 export default function Dashboard() {
-  const location = useLocation();
+  const [selectedMood, setSelectedMood] = useState<string | null>(null);
+
+  // Health Metrics
+  const healthMetrics = [
+    { label: 'Motivation', value: '85%', trend: '+5%', icon: Flame, highlighted: true },
+    { label: 'Focus Score', value: '88%', trend: '+2%', icon: Zap, highlighted: false },
+    { label: 'Study Streak', value: '12', trend: 'days', icon: Target, highlighted: false },
+    { label: 'Heart Rate', value: '72', trend: 'bpm', icon: Heart, highlighted: false },
+  ];
+
+  // Analytics Data
+  const motivationIndex = [
+    { day: 'Mon', score: 78 },
+    { day: 'Tue', score: 82 },
+    { day: 'Wed', score: 73 },
+    { day: 'Thu', score: 88 },
+    { day: 'Fri', score: 92 },
+    { day: 'Sat', score: 85 },
+    { day: 'Sun', score: 79 },
+  ];
+
+  const vitalSigns = [
+    { time: '08:00', heartRate: 68, focusScore: 75 },
+    { time: '12:00', heartRate: 72, focusScore: 88 },
+    { time: '16:00', heartRate: 70, focusScore: 82 },
+    { time: '20:00', heartRate: 66, focusScore: 79 },
+  ];
+
+  const studyHours = [
+    { day: 'Mon', study: 6.5, focus: 5.2 },
+    { day: 'Tue', study: 7.0, focus: 5.8 },
+    { day: 'Wed', study: 5.5, focus: 4.2 },
+    { day: 'Thu', study: 8.0, focus: 6.5 },
+    { day: 'Fri', study: 7.5, focus: 6.0 },
+    { day: 'Sat', study: 4.0, focus: 3.0 },
+    { day: 'Sun', study: 3.5, focus: 2.8 },
+  ];
+
+  // Mood Options
+  const moodOptions = [
+    { emoji: '😰', label: 'Anxious' },
+    { emoji: '😠', label: 'Stressed' },
+    { emoji: '💪', label: 'Motivated' },
+    { emoji: '🧘', label: 'Calm' },
+    { emoji: '😊', label: 'Happy' },
+    { emoji: '😢', label: 'Tired' },
+  ];
+
+  // Gamification
+  const leaderboard = [
+    { rank: 1, name: 'You', points: 2750, tone: 'Gold' },
+    { rank: 2, name: 'Alice', points: 2480, tone: 'Silver' },
+    { rank: 3, name: 'Bob', points: 2120, tone: 'Bronze' },
+  ];
+
+  // Resources
+  const resources = [
+    { icon: '🧘', label: 'Guided Meditation', description: '10-15 min sessions' },
+    { icon: '📊', label: 'Productivity Templates', description: 'Planning tools' },
+    { icon: '💡', label: 'Stress Management', description: 'Techniques & tips' },
+    { icon: '⏰', label: 'Time Management', description: 'Study schedules' },
+  ];
+
+  // Community Forum
+  const forumDiscussions = [
+    { title: 'How stay motivated during exams?', replies: 24 },
+    { title: 'Tips for improving sleep schedule', replies: 18 },
+  ];
+
+  // Notifications
+  const notifications = [
+    { type: 'reminder', title: 'Time for a break', emoji: '⏱️' },
+    { type: 'session', title: 'Mentor session available', emoji: '👨‍🏫' },
+    { type: 'tip', title: 'Daily wellness tip ready', emoji: '💡' },
+  ];
 
   return (
-    <div className="min-h-screen bg-[#eaeeeb] p-3 sm:p-5">
-      <div className="mx-auto grid min-h-[100dvh] max-w-[1480px] grid-cols-1 gap-3 rounded-[30px] border border-[#d8ded9] bg-[#f6f8f6] p-3 shadow-[0_22px_60px_-36px_rgba(19,39,26,0.28)] lg:grid-cols-[250px_minmax(0,1fr)]">
-        <aside className="rounded-[24px] border border-[#dde3df] bg-white p-5">
-          <div className="mb-8 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-600/40 bg-emerald-600/10">
-              <Target className="h-5 w-5 text-emerald-700" />
-            </div>
-            <div>
-              <p className="font-display text-xl font-semibold leading-none tracking-[-0.02em] text-[#16211a]">MotiTrack</p>
-              <p className="mt-1 text-xs font-medium text-[#6f7f75]">Student hub</p>
-            </div>
-          </div>
+    <div className="flex min-h-screen bg-[#f6f8f6]">
+      {/* Sidebar */}
+      <aside className="w-64 border-r border-[#e1e8e3] bg-[#fbfcfb] p-6">
+        <div className="mb-8 flex items-center gap-2">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#1d7d54] to-[#145d3f]" />
+          <span className="font-display text-lg font-semibold text-[#18271d]">Ayaara</span>
+        </div>
 
-          <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8d9992]">Menu</div>
-          <nav className="space-y-1.5">
-            {navItems.map((item) => {
-              const active = location.pathname === item.href || (item.href === '/dashboard' && location.pathname === '/student');
-              return (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(
-                    'group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
-                    active
-                      ? 'bg-emerald-600 text-white shadow-[0_14px_30px_-16px_rgba(24,116,78,0.85)]'
-                      : 'text-[#4f6056] hover:bg-[#eef3ef] hover:text-[#1d2a22]',
-                  )}
-                >
-                  <span className="flex items-center gap-2.5">
-                    <item.icon className="h-4.5 w-4.5" />
-                    {item.label}
-                  </span>
-                  {item.badge ? (
-                    <span className={cn('rounded-md px-1.5 py-0.5 text-[10px] font-semibold', active ? 'bg-white/20' : 'bg-emerald-600 text-white')}>
-                      {item.badge}
-                    </span>
-                  ) : null}
-                </Link>
-              );
-            })}
-          </nav>
+        <nav className="mb-8 space-y-2">
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-3 rounded-lg bg-[#f0f4f1] px-3 py-2 text-sm font-medium text-[#1d7d54]"
+          >
+            <LayoutDashboard className="h-4 w-4" />
+            Dashboard
+            <span className="ml-auto rounded bg-[#1d7d54] px-2 py-1 text-xs font-semibold text-white">
+              12
+            </span>
+          </Link>
+          <Link
+            to="/tasks"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
+          >
+            <FolderKanban className="h-4 w-4" />
+            Tasks
+          </Link>
+          <Link
+            to="/calendar"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
+          >
+            <CalendarDays className="h-4 w-4" />
+            Calendar
+          </Link>
+          <Link
+            to="/analytics"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
+          >
+            <TrendingUp className="h-4 w-4" />
+            Analytics
+          </Link>
+          <Link
+            to="/team"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
+          >
+            <Users className="h-4 w-4" />
+            Team
+          </Link>
+        </nav>
 
-          <div className="mb-4 mt-8 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8d9992]">General</div>
-          <div className="space-y-1.5">
-            {generalItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-[#6a7970] transition-colors hover:bg-[#eef3ef] hover:text-[#1d2a22]"
-              >
-                <item.icon className="h-4.5 w-4.5" />
-                {item.label}
-              </Link>
-            ))}
-          </div>
+        <div className="border-t border-[#dde3df] pt-4">
+          <div className="mb-3 space-y-1 text-xs font-medium uppercase text-[#a7b6ae]">General</div>
+          <Link
+            to="/settings"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
+          >
+            <Settings className="h-4 w-4" />
+            Settings
+          </Link>
+          <Link
+            to="/help"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]"
+          >
+            <CircleHelp className="h-4 w-4" />
+            Help
+          </Link>
+          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#76877e] hover:bg-[#f0f4f1]">
+            <LogOut className="h-4 w-4" />
+            Logout
+          </button>
+        </div>
 
-          <div className="mt-10 rounded-2xl border border-emerald-900/20 bg-[radial-gradient(80%_120%_at_0%_0%,#145f3f_0%,#0f3224_55%,#0c2519_100%)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]">
-            <p className="font-display text-lg font-semibold tracking-[-0.02em]">Focus mode</p>
-            <p className="mt-1 text-xs text-emerald-100/90">Take your next 25-minute sprint.</p>
-            <Button className="mt-4 h-9 w-full rounded-full bg-white text-xs font-semibold text-emerald-900 hover:bg-white/90">
-              Start sprint
-            </Button>
-          </div>
-        </aside>
+        {/* Focus Sprint Card */}
+        <div className="mt-8 overflow-hidden rounded-2xl bg-gradient-to-br from-[#1d7d54] to-[#145d3f] p-4 text-white">
+          <p className="font-display text-sm font-semibold">Enter Focus Mode</p>
+          <p className="mt-1 text-xs opacity-90">Start your study sprint</p>
+          <button className="mt-3 w-full rounded-lg bg-white/20 py-2 text-xs font-semibold hover:bg-white/30">
+            Start Sprint
+          </button>
+        </div>
+      </aside>
 
-        <main className="rounded-[24px] border border-[#dde3df] bg-white p-4 sm:p-6">
-          <header className="mb-5 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-            <div className="relative w-full max-w-xl">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7f8e86]" />
+      {/* Main Content */}
+      <div className="flex-1">
+        {/* Header */}
+        <header className="sticky top-0 border-b border-[#e1e8e3] bg-[#fbfcfb] px-8 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-1 items-center gap-2 rounded-lg border border-[#e1e8e3] bg-white px-3 py-2">
+              <Search className="h-4 w-4 text-[#a7b6ae]" />
               <Input
-                placeholder="Search task"
-                className="h-12 rounded-2xl border-[#dbe2de] bg-[#f8faf8] pl-11 text-sm text-[#203228] placeholder:text-[#8a9890] focus-visible:ring-emerald-600"
+                placeholder="Search tasks, projects..."
+                className="border-0 bg-transparent text-sm placeholder-[#a7b6ae] focus:outline-none focus:ring-0"
               />
             </div>
-
-            <div className="flex items-center gap-2 sm:gap-3">
-              <button className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9e0dc] bg-[#f7f9f7] text-[#617067] transition-colors hover:bg-[#edf3ef]">
-                <CalendarDays className="h-4 w-4" />
-              </button>
-              <button className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9e0dc] bg-[#f7f9f7] text-[#617067] transition-colors hover:bg-[#edf3ef]">
-                <Bell className="h-4 w-4" />
-              </button>
-              <div className="flex items-center gap-3 rounded-2xl border border-[#d9e0dc] bg-[#f8faf8] px-3 py-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-xs font-semibold text-emerald-800">TM</div>
-                <div>
-                  <p className="text-sm font-semibold text-[#1f2d24]">Totok Michael</p>
-                  <p className="text-xs text-[#7a8a81]">tmichael20@mail.com</p>
-                </div>
-              </div>
-            </div>
-          </header>
-
-          <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <h1 className="font-display text-[42px] font-semibold leading-[0.95] tracking-[-0.035em] text-[#152319]">Dashboard</h1>
-              <p className="mt-2 max-w-2xl text-sm text-[#7d8b84]">Plan, prioritize, and accomplish your study targets with clarity.</p>
-            </div>
-            <div className="flex flex-wrap gap-2.5">
-              <Button className="h-11 rounded-full bg-emerald-700 px-6 text-sm font-semibold text-white shadow-[0_14px_30px_-16px_rgba(24,116,78,0.9)] hover:bg-emerald-800">
-                + Add project
-              </Button>
-              <Button variant="outline" className="h-11 rounded-full border-emerald-700/45 bg-white px-6 text-sm font-semibold text-emerald-800 hover:bg-emerald-50">
-                Import data
-              </Button>
+            <button className="relative rounded-lg p-2 hover:bg-[#f0f4f1]">
+              <Bell className="h-5 w-5 text-[#76877e]" />
+              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-rose-500" />
+            </button>
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#1d7d54] to-[#145d3f] text-xs font-semibold text-white">
+              JD
             </div>
           </div>
+        </header>
 
-          <section className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4">
-            {kpis.map((card) => (
-              <article
-                key={card.label}
-                className={cn(
-                  'rounded-2xl border p-4 transition-all duration-300',
-                  card.highlighted
-                    ? 'border-emerald-800/20 bg-[radial-gradient(120%_120%_at_0%_0%,#2e9e68_0%,#18744e_58%,#145d3f_100%)] text-white shadow-[0_18px_40px_-20px_rgba(17,84,56,0.9)]'
-                    : 'border-[#dde3df] bg-[#fbfcfb] text-[#1f2d24] hover:border-emerald-700/30',
-                )}
-              >
-                <div className="mb-3 flex items-center justify-between">
-                  <p className={cn('text-sm font-medium', card.highlighted ? 'text-emerald-50' : 'text-[#32443a]')}>{card.label}</p>
-                  <span className={cn('flex h-7 w-7 items-center justify-center rounded-full border', card.highlighted ? 'border-white/45' : 'border-[#c4cec8]')}>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </span>
-                </div>
-                <p className="font-display text-5xl font-semibold leading-none tracking-[-0.04em]">{card.value}</p>
-                <p className={cn('mt-3 text-xs font-medium', card.highlighted ? 'text-emerald-100' : 'text-[#7c8b82]')}>{card.note}</p>
-              </article>
-            ))}
-          </section>
-
-          <section className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.55fr_0.95fr]">
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <div className="mb-2 flex items-center justify-between">
-                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Project analytics</p>
-              </div>
-              <div className="h-[252px] rounded-2xl bg-white p-4">
-                <div className="flex h-full items-end justify-between gap-3">
-                  {analytics.map((entry, index) => (
-                    <div key={`${entry.day}-${index}`} className="flex flex-1 flex-col items-center gap-2">
+        {/* Main Content Area */}
+        <main className="overflow-y-auto p-8">
+          {/* Health Metrics */}
+          <section className="mb-8">
+            <div className="grid gap-4 2xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
+              {healthMetrics.map((metric) => {
+                const Icon = metric.icon;
+                return (
+                  <article
+                    key={metric.label}
+                    className={cn(
+                      'rounded-2xl border p-4',
+                      metric.highlighted
+                        ? 'border-[#1d7d54] bg-gradient-to-br from-[#f6f8f6] to-[#fbfcfb]'
+                        : 'border-[#dde3df] bg-[#fbfcfb]',
+                    )}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#76877e]">{metric.label}</p>
+                        <p className="font-display text-[32px] font-semibold leading-none text-[#18271d]">
+                          {metric.value}
+                        </p>
+                        <p className="mt-2 text-xs text-[#1d7d54]">{metric.trend}</p>
+                      </div>
                       <div
                         className={cn(
-                          'w-full rounded-[999px] transition-all duration-300',
-                          entry.striped
-                            ? 'bg-[repeating-linear-gradient(135deg,#a7b6ae_0_4px,#f0f4f1_4px_8px)]'
-                            : 'bg-emerald-700',
+                          'flex h-10 w-10 items-center justify-center rounded-lg',
+                          metric.highlighted ? 'bg-[#1d7d54] text-white' : 'bg-[#f0f4f1] text-[#1d7d54]',
                         )}
-                        style={{ height: `${Math.max(entry.score * 2, 32)}px` }}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Analytics Charts */}
+          <section className="mb-8">
+            <div className="grid gap-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+              {/* Motivation Index */}
+              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+                <p className="font-display text-lg font-semibold text-[#18271d]">Motivation Index</p>
+                <p className="mt-1 text-xs text-[#7d8c84]">7-day trend</p>
+                <div className="mt-4 flex items-end justify-between gap-1 h-24">
+                  {motivationIndex.map((item) => (
+                    <div key={item.day} className="flex flex-col items-center gap-1 flex-1">
+                      <div
+                        className="w-full rounded-t-sm bg-gradient-to-t from-[#1d7d54] to-[#2e9e68]"
+                        style={{ height: `${(item.score / 100) * 80}px` }}
                       />
-                      <span className="text-xs font-medium text-[#809087]">{entry.day}</span>
+                      <span className="text-[10px] font-medium text-[#76877e]">{item.day}</span>
                     </div>
                   ))}
                 </div>
-              </div>
-            </article>
-
-            <div className="grid gap-3">
-              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Reminders</p>
-                <p className="mt-2 text-[31px] font-semibold leading-[1.05] tracking-[-0.03em] text-[#203128]">{reminder.title}</p>
-                <p className="text-[31px] font-semibold leading-[1.05] tracking-[-0.03em] text-[#203128]">{reminder.subtitle}</p>
-                <p className="mt-1 text-sm text-[#7d8c84]">Time: {reminder.time}</p>
-                <Button className="mt-4 h-10 rounded-full bg-emerald-700 px-6 text-sm font-semibold text-white hover:bg-emerald-800">Start meeting</Button>
               </article>
 
+              {/* Vital Signs */}
               <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-                <div className="mb-2 flex items-center justify-between">
-                  <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Project</p>
-                  <Button variant="outline" className="h-8 rounded-full border-[#d5ddd8] px-3 text-xs font-semibold text-[#33453b] hover:bg-[#eef4f0]">
-                    + New
-                  </Button>
+                <p className="font-display text-lg font-semibold text-[#18271d]">Vital Signs</p>
+                <p className="mt-1 text-xs text-[#7d8c84]">Heart rate vs Focus</p>
+                <div className="mt-4 space-y-3">
+                  {vitalSigns.map((item) => (
+                    <div key={item.time} className="flex items-center justify-between">
+                      <span className="text-xs text-[#76877e]">{item.time}</span>
+                      <div className="flex gap-2">
+                        <div className="flex items-center gap-1">
+                          <div
+                            className="rounded-sm bg-rose-500"
+                            style={{ width: `${item.heartRate / 2}px`, height: '6px' }}
+                          />
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div
+                            className="rounded-sm bg-[#1d7d54]"
+                            style={{ width: `${item.focusScore / 2}px`, height: '6px' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="space-y-2.5">
-                  {projectItems.map((item) => (
-                    <div key={item} className="rounded-xl border border-[#e2e8e4] bg-white px-3 py-2 text-sm font-medium text-[#304239]">
-                      {item}
+              </article>
+
+              {/* Study Hours */}
+              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+                <p className="font-display text-lg font-semibold text-[#18271d]">Study vs Focus</p>
+                <p className="mt-1 text-xs text-[#7d8c84]">Weekly comparison</p>
+                <div className="mt-4 flex items-end justify-between gap-1 h-24">
+                  {studyHours.map((item) => (
+                    <div key={item.day} className="flex flex-col items-center gap-1 flex-1">
+                      <div className="flex w-full gap-0.5">
+                        <div
+                          className="flex-1 rounded-t-sm bg-amber-400"
+                          style={{ height: `${(item.study / 8) * 80}px` }}
+                        />
+                        <div
+                          className="flex-1 rounded-t-sm bg-[#1d7d54]"
+                          style={{ height: `${(item.focus / 8) * 80}px` }}
+                        />
+                      </div>
+                      <span className="text-[10px] font-medium text-[#76877e]">{item.day}</span>
                     </div>
                   ))}
                 </div>
@@ -288,125 +324,176 @@ export default function Dashboard() {
             </div>
           </section>
 
-          <section className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.2fr_1fr_0.95fr]">
+          {/* Mood Detection */}
+          <section className="mb-8">
             <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <div className="mb-4 flex items-center justify-between">
-                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Team collaboration</p>
-                <Button variant="outline" className="h-8 rounded-full border-[#d6dfd8] px-3 text-xs font-semibold text-[#33453b] hover:bg-[#eff4f1]">
-                  + Add member
-                </Button>
+              <p className="font-display text-lg font-semibold text-[#18271d]">How are you feeling?</p>
+              <p className="mt-1 text-xs text-[#7d8c84]">Select your current mood</p>
+              <div className="mt-4 flex gap-3">
+                {moodOptions.map((mood) => (
+                  <button
+                    key={mood.label}
+                    onClick={() => setSelectedMood(mood.label)}
+                    className={cn(
+                      'flex flex-col items-center gap-1 rounded-lg p-3 text-2xl transition-all',
+                      selectedMood === mood.label
+                        ? 'border-2 border-[#1d7d54] bg-[#f0f4f1]'
+                        : 'border border-[#dde3df] hover:bg-[#f8faf8]',
+                    )}
+                  >
+                    {mood.emoji}
+                    <span className="text-[10px] font-medium text-[#76877e]">{mood.label}</span>
+                  </button>
+                ))}
               </div>
+            </article>
+          </section>
 
-              <div className="space-y-4">
-                {teamCollaboration.map((member) => (
-                  <div key={member.name} className="rounded-xl border border-[#e1e8e3] bg-white p-3">
-                    <div className="flex items-start gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#dce9e2] text-xs font-semibold text-[#284237]">
-                        {member.name
-                          .split(' ')
-                          .map((part) => part[0])
-                          .join('')
-                          .slice(0, 2)}
-                      </div>
-                      <div className="flex-1">
-                        <div className="mb-1 flex items-center justify-between gap-2">
-                          <p className="text-sm font-semibold text-[#24362c]">{member.name}</p>
-                          <span
-                            className={cn(
-                              'rounded-md px-2 py-1 text-[10px] font-semibold',
-                              member.tone === 'emerald' && 'bg-emerald-100 text-emerald-800',
-                              member.tone === 'amber' && 'bg-amber-100 text-amber-800',
-                              member.tone === 'rose' && 'bg-rose-100 text-rose-800',
-                            )}
-                          >
-                            {member.status}
-                          </span>
-                        </div>
-                        <p className="text-xs text-[#76877e]">{member.task}</p>
-                      </div>
+          {/* Gamification & Coaching */}
+          <section className="mb-8 grid gap-4 lg:grid-cols-2 md:grid-cols-1">
+            {/* Gamification */}
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <p className="font-display text-lg font-semibold text-[#18271d]">Falling Leaves Challenge</p>
+              <p className="mt-1 text-xs text-[#7d8c84]">Earn points and streaks</p>
+              <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="rounded-lg bg-gradient-to-br from-[#1d7d54]/10 to-[#2e9e68]/10 p-3">
+                  <p className="text-xs text-[#76877e]">Score</p>
+                  <p className="font-display text-2xl font-semibold text-[#1d7d54]">1,240</p>
+                </div>
+                <div className="rounded-lg bg-gradient-to-br from-amber-500/10 to-amber-600/10 p-3">
+                  <p className="text-xs text-[#76877e]">Streak</p>
+                  <p className="font-display text-2xl font-semibold text-amber-600">8 days</p>
+                </div>
+              </div>
+              <button className="mt-4 w-full rounded-lg bg-[#1d7d54] py-2 text-sm font-semibold text-white hover:bg-[#145d3f] flex items-center justify-center gap-2">
+                <Play className="h-4 w-4" /> Play Now
+              </button>
+
+              {/* Leaderboard */}
+              <div className="mt-5 space-y-2 border-t border-[#dde3df] pt-4">
+                <p className="text-xs font-semibold uppercase text-[#a7b6ae]">Leaderboard</p>
+                {leaderboard.map((entry) => (
+                  <div key={entry.rank} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="h-6 w-6 rounded-full bg-[#f0f4f1] text-center text-xs font-semibold text-[#1d7d54]">
+                        {entry.rank}
+                      </span>
+                      <span className="text-sm font-medium text-[#18271d]">{entry.name}</span>
                     </div>
+                    <span className="font-semibold text-[#1d7d54]">{entry.points}</span>
                   </div>
                 ))}
               </div>
             </article>
 
+            {/* Coaching */}
             <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Motivation status</p>
-                <p className="mt-1 text-sm text-[#7d8c84]">Weekly completion and readiness distribution</p>
-
-                <div className="mt-5 flex flex-col items-center gap-4">
-                  <div
-                    className="relative h-52 w-52 rounded-full"
-                    style={{
-                      background: `conic-gradient(#1d7d54 0deg ${motivationStatuses[0].value * 3.6}deg, #2fa670 ${motivationStatuses[0].value * 3.6}deg ${(motivationStatuses[0].value + motivationStatuses[1].value) * 3.6}deg, #d3ddd7 ${(motivationStatuses[0].value + motivationStatuses[1].value) * 3.6}deg 360deg)`,
-                    }}
-                  >
-                    <div className="absolute inset-[24px] flex items-center justify-center rounded-full bg-white text-center shadow-[inset_0_0_0_1px_#deE5E0]">
-                      <div>
-                        <p className="font-display text-[58px] font-semibold leading-none tracking-[-0.04em] text-[#122218]">{completion}%</p>
-                        <p className="mt-1 text-xs font-medium text-[#7c8b82]">Project ended</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="w-full space-y-3 pt-1">
-                    {motivationStatuses.map((status) => (
-                      <div key={status.name} className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className={cn('h-2.5 w-2.5 rounded-full', status.tone)} />
-                          <span className="text-sm font-medium text-[#283930]">{status.name}</span>
-                        </div>
-                        <span className="text-sm text-[#708077]">{status.value}%</span>
-                      </div>
-                    ))}
-                  </div>
+              <div className="grid gap-3">
+                {/* Mentor Feedback */}
+                <div className="rounded-lg border border-[#dde3df] bg-white p-3">
+                  <p className="text-xs font-semibold text-[#76877e]">Mentor Feedback</p>
+                  <textarea
+                    placeholder="Share your thoughts..."
+                    className="mt-2 w-full rounded-lg border border-[#dde3df] bg-[#f8faf8] px-3 py-2 text-sm placeholder-[#a7b6ae] focus:border-[#1d7d54] focus:outline-none"
+                    rows={4}
+                  />
+                  <button className="mt-2 rounded-lg bg-[#1d7d54] px-3 py-2 text-sm font-semibold text-white hover:bg-[#145d3f] flex items-center gap-2">
+                    <Send className="h-4 w-4" /> Send Response
+                  </button>
                 </div>
+
+                {/* AI Coach */}
+                <div className="rounded-lg bg-gradient-to-br from-[#1d7d54]/10 to-[#2e9e68]/10 p-3">
+                  <p className="text-xs font-semibold text-[#1d7d54]">AI Coach Daily Habit</p>
+                  <p className="mt-2 italic text-sm text-[#18271d]">"Progress is not perfection. Focus on consistency."</p>
+                  <p className="mt-2 text-xs text-[#76877e]">💡 Today's habit: Take 5-minute breaks every hour</p>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          {/* Resources & Community */}
+          <section className="mb-8 grid gap-4 lg:grid-cols-2 md:grid-cols-1">
+            {/* Resources */}
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <p className="font-display text-lg font-semibold text-[#18271d]">Resources Hub</p>
+              <p className="mt-1 text-xs text-[#7d8c84]">Tools to boost productivity</p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {resources.map((resource) => (
+                  <button
+                    key={resource.label}
+                    className="rounded-lg border border-[#dde3df] bg-white p-3 text-left hover:border-[#1d7d54] hover:bg-[#f8faf8] transition-colors"
+                  >
+                    <p className="text-xl">{resource.icon}</p>
+                    <p className="mt-1 text-sm font-semibold text-[#18271d]">{resource.label}</p>
+                    <p className="text-xs text-[#76877e]">{resource.description}</p>
+                  </button>
+                ))}
+              </div>
             </article>
 
-            <div className="grid gap-3">
-              <article className="rounded-2xl border border-[#dde3df] bg-[radial-gradient(130%_140%_at_80%_-10%,#1f7f56_0%,#134931_48%,#102d20_100%)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-                <p className="font-display text-[24px] font-semibold tracking-[-0.03em]">Focus timer</p>
-                <p className="mt-1 text-sm text-emerald-100/85">Current deep-work session</p>
-
-                <div className="mt-7 text-center">
-                  <Clock3 className="mx-auto mb-3 h-8 w-8 text-emerald-100" />
-                  <p className="font-display text-[50px] font-semibold leading-none tracking-[-0.04em]">01:24:08</p>
-                  <p className="mt-2 text-sm text-emerald-100/80">Session quality: stable</p>
-                </div>
-
-                <div className="mt-8 flex items-center justify-center gap-3">
-                  <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-emerald-900 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]">
-                    <Play className="h-5 w-5" />
-                  </button>
-                  <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
-                    <Pause className="h-5 w-5" />
-                  </button>
-                  <button className="flex h-11 w-11 items-center justify-center rounded-full bg-red-500 text-white transition-colors hover:bg-red-600">
-                    <Clock3 className="h-5 w-5" />
-                  </button>
-                </div>
-              </article>
-
-              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-                <p className="font-display text-lg font-semibold tracking-[-0.02em] text-[#18271d]">Session health</p>
-                <div className="mt-3 space-y-3">
-                  <div>
-                    <div className="mb-1.5 flex items-center justify-between text-xs text-[#6f8077]">
-                      <span>Focus retention</span>
-                      <span>84%</span>
-                    </div>
-                    <Progress value={84} className="h-2 bg-[#e7ece8]" />
+            {/* Community Forum */}
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <p className="font-display text-lg font-semibold text-[#18271d]">Community Forum</p>
+              <p className="mt-1 text-xs text-[#7d8c84]">Connect with peers</p>
+              <div className="mt-4 space-y-3">
+                {forumDiscussions.map((discussion, idx) => (
+                  <div key={idx} className="rounded-lg border border-[#dde3df] bg-white p-3">
+                    <p className="text-sm font-semibold text-[#18271d]">{discussion.title}</p>
+                    <p className="mt-1 text-xs text-[#76877e]">{discussion.replies} replies</p>
                   </div>
-                  <div>
-                    <div className="mb-1.5 flex items-center justify-between text-xs text-[#6f8077]">
-                      <span>Mood stability</span>
-                      <span>79%</span>
-                    </div>
-                    <Progress value={79} className="h-2 bg-[#e7ece8]" />
+                ))}
+                <button className="w-full rounded-lg bg-[#1d7d54] py-2 text-sm font-semibold text-white hover:bg-[#145d3f]">
+                  Join Discussion
+                </button>
+              </div>
+            </article>
+          </section>
+
+          {/* Career & Notifications */}
+          <section className="mb-8 grid gap-4 lg:grid-cols-2 md:grid-cols-1">
+            {/* Career Tracker */}
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <p className="font-display text-lg font-semibold text-[#18271d]">Career Tracker</p>
+              <p className="mt-1 text-xs text-[#7d8c84]">Current goal progress</p>
+              <div className="mt-4 space-y-3">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-[#18271d]">Software Engineer</p>
+                    <span className="text-xs font-semibold text-[#1d7d54]">75%</span>
                   </div>
+                  <Progress value={75} className="mt-2 h-2 bg-[#e7ece8]" />
                 </div>
-              </article>
-            </div>
+                <div className="flex gap-2 pt-2">
+                  <button className="flex-1 rounded-lg border border-[#1d7d54] px-3 py-2 text-xs font-semibold text-[#1d7d54] hover:bg-[#f0f4f1]">
+                    <Plus className="h-4 w-4 inline mr-1" /> Add Internship
+                  </button>
+                  <button className="flex-1 rounded-lg bg-[#1d7d54] px-3 py-2 text-xs font-semibold text-white hover:bg-[#145d3f]">
+                    View Path
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            {/* Notifications Feed */}
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <p className="font-display text-lg font-semibold text-[#18271d]">Notifications</p>
+              <p className="mt-1 text-xs text-[#7d8c84]">Recent updates</p>
+              <div className="mt-4 space-y-3">
+                {notifications.map((notif, idx) => (
+                  <div key={idx} className="flex items-start justify-between rounded-lg border border-[#dde3df] bg-white p-3">
+                    <div className="flex gap-2">
+                      <span className="text-lg">{notif.emoji}</span>
+                      <div>
+                        <p className="text-sm font-semibold text-[#18271d]">{notif.title}</p>
+                        <p className="text-xs text-[#76877e]">Just now</p>
+                      </div>
+                    </div>
+                    <button className="text-xs font-semibold text-[#1d7d54] hover:underline">View</button>
+                  </div>
+                ))}
+              </div>
+            </article>
           </section>
         </main>
       </div>
