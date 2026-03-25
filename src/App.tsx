@@ -21,6 +21,7 @@ import CareerPath from "./pages/CareerPath";
 import MentalSupport from "./pages/MentalSupport";
 import Profile from "./pages/Profile";
 import Chatbot from "./components/Chatbot";
+import AppErrorBoundary from "./components/AppErrorBoundary";
 
 const queryClient = new QueryClient();
 
@@ -33,32 +34,34 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ChatbotWrapper />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/skills" element={<SkillsPage />} />
-            <Route path="/career" element={<CareerAssistant />} />
-            <Route path="/career-path" element={<CareerPath />} />
-            <Route path="/student" element={<Dashboard />} />
-            <Route path="/professor" element={<ProfessorDashboard />} />
-            <Route path="/professor/students" element={<ProfessorStudents />} />
-            <Route path="/professor/students/:id" element={<StudentProfile />} />
-            <Route path="/professor/skills" element={<ProfessorSkills />} />
-            <Route path="/professor/activities" element={<ProfessorActivities />} />
-            <Route path="/professor/reports" element={<ProfessorReports />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/iot" element={<IoTDeviceHub />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/mental-support" element={<MentalSupport />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <AppErrorBoundary>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ChatbotWrapper />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/skills" element={<SkillsPage />} />
+              <Route path="/career" element={<CareerAssistant />} />
+              <Route path="/career-path" element={<CareerPath />} />
+              <Route path="/student" element={<Dashboard />} />
+              <Route path="/professor" element={<ProfessorDashboard />} />
+              <Route path="/professor/students" element={<ProfessorStudents />} />
+              <Route path="/professor/students/:id" element={<StudentProfile />} />
+              <Route path="/professor/skills" element={<ProfessorSkills />} />
+              <Route path="/professor/activities" element={<ProfessorActivities />} />
+              <Route path="/professor/reports" element={<ProfessorReports />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/iot" element={<IoTDeviceHub />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/mental-support" element={<MentalSupport />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </AppErrorBoundary>
       </TooltipProvider>
     </QueryClientProvider>
   );
