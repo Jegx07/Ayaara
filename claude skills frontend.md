@@ -152,4 +152,4 @@ Always pair a display font + body font. Variable fonts preferred.
 4. Customize with Tailwind
 5. Apply Next.js patterns
 6. Add motion with Framer Motion
-7. Verify accessibility
+7. Verify accessibility 

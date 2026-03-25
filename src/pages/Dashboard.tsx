@@ -20,7 +20,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
-import { ResponsiveContainer, AreaChart, Area, BarChart, Bar, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 import { cn } from '@/lib/utils';
 
 const navItems = [
@@ -45,26 +44,60 @@ const kpis = [
 ];
 
 const analytics = [
-  { day: 'S', score: 42 },
-  { day: 'M', score: 76 },
-  { day: 'T', score: 68 },
-  { day: 'W', score: 84 },
-  { day: 'T', score: 54 },
-  { day: 'F', score: 48 },
-  { day: 'S', score: 62 },
+  { day: 'S', score: 58, striped: true },
+  { day: 'M', score: 82, striped: false },
+  { day: 'T', score: 74, striped: false },
+  { day: 'W', score: 88, striped: false },
+  { day: 'T', score: 52, striped: true },
+  { day: 'F', score: 56, striped: true },
+  { day: 'S', score: 66, striped: true },
 ];
 
-const skillProgress = [
-  { label: 'React architecture', value: 87, status: 'Completed' },
-  { label: 'Data structures', value: 63, status: 'In progress' },
-  { label: 'Cloud fundamentals', value: 48, status: 'Pending' },
-  { label: 'Career prep', value: 72, status: 'In progress' },
+const teamCollaboration = [
+  {
+    name: 'Alexandra Deff',
+    task: 'Working on GitHub project repository',
+    status: 'Completed',
+    tone: 'emerald',
+  },
+  {
+    name: 'Edwin Adenike',
+    task: 'Working on user authentication system',
+    status: 'In progress',
+    tone: 'amber',
+  },
+  {
+    name: 'Isaac Oluwatermilun',
+    task: 'Working on search and filter functionality',
+    status: 'Pending',
+    tone: 'rose',
+  },
+  {
+    name: 'David Oshodi',
+    task: 'Working on responsive layout for homepage',
+    status: 'In progress',
+    tone: 'amber',
+  },
+];
+
+const reminder = {
+  title: 'Meeting with mentor',
+  subtitle: 'Career Lab',
+  time: '10:00 pm - 04:00 pm',
+};
+
+const projectItems = [
+  'Develop API endpoints',
+  'Onboarding flow',
+  'Build dashboard',
+  'Optimize page load',
+  'Cross-browser testing',
 ];
 
 const motivationStatuses = [
-  { name: 'Completed', value: 41, color: 'bg-emerald-700' },
-  { name: 'In progress', value: 37, color: 'bg-emerald-500' },
-  { name: 'Pending', value: 22, color: 'bg-slate-300' },
+  { name: 'Completed', value: 41, tone: 'bg-emerald-700' },
+  { name: 'In progress', value: 37, tone: 'bg-emerald-500' },
+  { name: 'Pending', value: 22, tone: 'bg-slate-300' },
 ];
 
 const completion = 41;
@@ -150,6 +183,9 @@ export default function Dashboard() {
 
             <div className="flex items-center gap-2 sm:gap-3">
               <button className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9e0dc] bg-[#f7f9f7] text-[#617067] transition-colors hover:bg-[#edf3ef]">
+                <CalendarDays className="h-4 w-4" />
+              </button>
+              <button className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9e0dc] bg-[#f7f9f7] text-[#617067] transition-colors hover:bg-[#edf3ef]">
                 <Bell className="h-4 w-4" />
               </button>
               <div className="flex items-center gap-3 rounded-2xl border border-[#d9e0dc] bg-[#f8faf8] px-3 py-2.5">
@@ -205,121 +241,172 @@ export default function Dashboard() {
               <div className="mb-2 flex items-center justify-between">
                 <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Project analytics</p>
               </div>
-              <div className="h-[252px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={analytics} barCategoryGap={28}>
-                    <CartesianGrid vertical={false} stroke="#e6ece8" strokeDasharray="3 4" />
-                    <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fill: '#809087', fontSize: 12 }} />
-                    <YAxis hide domain={[0, 100]} />
-                    <Tooltip
-                      cursor={{ fill: '#eff5f1' }}
-                      contentStyle={{ borderRadius: '14px', border: '1px solid #d6dfd8', backgroundColor: '#ffffff' }}
-                    />
-                    <Bar dataKey="score" radius={[20, 20, 20, 20]} fill="#1f7a52" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </article>
-
-            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
-              <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Motivation status</p>
-              <p className="mt-1 text-sm text-[#7d8c84]">Weekly completion and readiness distribution</p>
-
-              <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:items-start">
-                <div
-                  className="relative h-40 w-40 rounded-full"
-                  style={{ background: `conic-gradient(#1d7d54 ${completion * 3.6}deg, #cfdbd4 ${completion * 3.6}deg 360deg)` }}
-                >
-                  <div className="absolute inset-[16px] flex items-center justify-center rounded-full bg-white text-center shadow-[inset_0_0_0_1px_#deE5E0]">
-                    <div>
-                      <p className="font-display text-4xl font-semibold leading-none tracking-[-0.03em] text-[#122218]">{completion}%</p>
-                      <p className="mt-1 text-xs font-medium text-[#7c8b82]">Project ended</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="w-full space-y-3">
-                  {motivationStatuses.map((status) => (
-                    <div key={status.name}>
-                      <div className="mb-1.5 flex items-center justify-between text-sm">
-                        <span className="font-medium text-[#283930]">{status.name}</span>
-                        <span className="text-[#708077]">{status.value}%</span>
-                      </div>
-                      <Progress value={status.value} className="h-2 bg-[#e7ece8]" />
+              <div className="h-[252px] rounded-2xl bg-white p-4">
+                <div className="flex h-full items-end justify-between gap-3">
+                  {analytics.map((entry, index) => (
+                    <div key={`${entry.day}-${index}`} className="flex flex-1 flex-col items-center gap-2">
+                      <div
+                        className={cn(
+                          'w-full rounded-[999px] transition-all duration-300',
+                          entry.striped
+                            ? 'bg-[repeating-linear-gradient(135deg,#a7b6ae_0_4px,#f0f4f1_4px_8px)]'
+                            : 'bg-emerald-700',
+                        )}
+                        style={{ height: `${Math.max(entry.score * 2, 32)}px` }}
+                      />
+                      <span className="text-xs font-medium text-[#809087]">{entry.day}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </article>
+
+            <div className="grid gap-3">
+              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Reminders</p>
+                <p className="mt-2 text-[31px] font-semibold leading-[1.05] tracking-[-0.03em] text-[#203128]">{reminder.title}</p>
+                <p className="text-[31px] font-semibold leading-[1.05] tracking-[-0.03em] text-[#203128]">{reminder.subtitle}</p>
+                <p className="mt-1 text-sm text-[#7d8c84]">Time: {reminder.time}</p>
+                <Button className="mt-4 h-10 rounded-full bg-emerald-700 px-6 text-sm font-semibold text-white hover:bg-emerald-800">Start meeting</Button>
+              </article>
+
+              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Project</p>
+                  <Button variant="outline" className="h-8 rounded-full border-[#d5ddd8] px-3 text-xs font-semibold text-[#33453b] hover:bg-[#eef4f0]">
+                    + New
+                  </Button>
+                </div>
+                <div className="space-y-2.5">
+                  {projectItems.map((item) => (
+                    <div key={item} className="rounded-xl border border-[#e2e8e4] bg-white px-3 py-2 text-sm font-medium text-[#304239]">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </article>
+            </div>
           </section>
 
-          <section className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.55fr_0.95fr]">
+          <section className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.2fr_1fr_0.95fr]">
             <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
               <div className="mb-4 flex items-center justify-between">
-                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Skill progress</p>
+                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Team collaboration</p>
                 <Button variant="outline" className="h-8 rounded-full border-[#d6dfd8] px-3 text-xs font-semibold text-[#33453b] hover:bg-[#eff4f1]">
-                  + Add skill
+                  + Add member
                 </Button>
               </div>
 
               <div className="space-y-4">
-                {skillProgress.map((skill) => (
-                  <div key={skill.label}>
-                    <div className="mb-2 flex items-center justify-between gap-3">
-                      <p className="text-sm font-semibold text-[#25362d]">{skill.label}</p>
-                      <span className="rounded-md bg-[#ecf3ef] px-2 py-1 text-xs font-medium text-[#5f7268]">{skill.status}</span>
+                {teamCollaboration.map((member) => (
+                  <div key={member.name} className="rounded-xl border border-[#e1e8e3] bg-white p-3">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#dce9e2] text-xs font-semibold text-[#284237]">
+                        {member.name
+                          .split(' ')
+                          .map((part) => part[0])
+                          .join('')
+                          .slice(0, 2)}
+                      </div>
+                      <div className="flex-1">
+                        <div className="mb-1 flex items-center justify-between gap-2">
+                          <p className="text-sm font-semibold text-[#24362c]">{member.name}</p>
+                          <span
+                            className={cn(
+                              'rounded-md px-2 py-1 text-[10px] font-semibold',
+                              member.tone === 'emerald' && 'bg-emerald-100 text-emerald-800',
+                              member.tone === 'amber' && 'bg-amber-100 text-amber-800',
+                              member.tone === 'rose' && 'bg-rose-100 text-rose-800',
+                            )}
+                          >
+                            {member.status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#76877e]">{member.task}</p>
+                      </div>
                     </div>
-                    <Progress value={skill.value} className="h-2.5 bg-[#e6ece8]" />
                   </div>
                 ))}
               </div>
+            </article>
 
-              <div className="mt-6 h-[178px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart
-                    data={analytics.map((point, index) => ({
-                      ...point,
-                      consistency: [52, 64, 61, 78, 70, 68, 72][index],
-                    }))}
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Motivation status</p>
+                <p className="mt-1 text-sm text-[#7d8c84]">Weekly completion and readiness distribution</p>
+
+                <div className="mt-5 flex flex-col items-center gap-4">
+                  <div
+                    className="relative h-52 w-52 rounded-full"
+                    style={{
+                      background: `conic-gradient(#1d7d54 0deg ${motivationStatuses[0].value * 3.6}deg, #2fa670 ${motivationStatuses[0].value * 3.6}deg ${(motivationStatuses[0].value + motivationStatuses[1].value) * 3.6}deg, #d3ddd7 ${(motivationStatuses[0].value + motivationStatuses[1].value) * 3.6}deg 360deg)`,
+                    }}
                   >
-                    <defs>
-                      <linearGradient id="consistencyFill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#2A8A5E" stopOpacity={0.34} />
-                        <stop offset="95%" stopColor="#2A8A5E" stopOpacity={0.04} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid vertical={false} stroke="#edf2ef" />
-                    <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fill: '#819189', fontSize: 12 }} />
-                    <YAxis hide domain={[0, 100]} />
-                    <Tooltip contentStyle={{ borderRadius: '14px', border: '1px solid #d6dfd8', backgroundColor: '#ffffff' }} />
-                    <Area type="monotone" dataKey="consistency" stroke="#1E7D54" strokeWidth={2.4} fill="url(#consistencyFill)" />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
+                    <div className="absolute inset-[24px] flex items-center justify-center rounded-full bg-white text-center shadow-[inset_0_0_0_1px_#deE5E0]">
+                      <div>
+                        <p className="font-display text-[58px] font-semibold leading-none tracking-[-0.04em] text-[#122218]">{completion}%</p>
+                        <p className="mt-1 text-xs font-medium text-[#7c8b82]">Project ended</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="w-full space-y-3 pt-1">
+                    {motivationStatuses.map((status) => (
+                      <div key={status.name} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className={cn('h-2.5 w-2.5 rounded-full', status.tone)} />
+                          <span className="text-sm font-medium text-[#283930]">{status.name}</span>
+                        </div>
+                        <span className="text-sm text-[#708077]">{status.value}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
             </article>
 
-            <article className="rounded-2xl border border-[#dde3df] bg-[radial-gradient(130%_140%_at_80%_-10%,#1f7f56_0%,#134931_48%,#102d20_100%)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-              <p className="font-display text-[24px] font-semibold tracking-[-0.03em]">Focus timer</p>
-              <p className="mt-1 text-sm text-emerald-100/85">Current deep-work session</p>
+            <div className="grid gap-3">
+              <article className="rounded-2xl border border-[#dde3df] bg-[radial-gradient(130%_140%_at_80%_-10%,#1f7f56_0%,#134931_48%,#102d20_100%)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+                <p className="font-display text-[24px] font-semibold tracking-[-0.03em]">Focus timer</p>
+                <p className="mt-1 text-sm text-emerald-100/85">Current deep-work session</p>
 
-              <div className="mt-7 text-center">
-                <Clock3 className="mx-auto mb-3 h-8 w-8 text-emerald-100" />
-                <p className="font-display text-[50px] font-semibold leading-none tracking-[-0.04em]">01:24:08</p>
-                <p className="mt-2 text-sm text-emerald-100/80">Session quality: stable</p>
-              </div>
+                <div className="mt-7 text-center">
+                  <Clock3 className="mx-auto mb-3 h-8 w-8 text-emerald-100" />
+                  <p className="font-display text-[50px] font-semibold leading-none tracking-[-0.04em]">01:24:08</p>
+                  <p className="mt-2 text-sm text-emerald-100/80">Session quality: stable</p>
+                </div>
 
-              <div className="mt-8 flex items-center justify-center gap-3">
-                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-emerald-900 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]">
-                  <Play className="h-5 w-5" />
-                </button>
-                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
-                  <Pause className="h-5 w-5" />
-                </button>
-                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
-                  <LogOut className="h-5 w-5" />
-                </button>
-              </div>
-            </article>
+                <div className="mt-8 flex items-center justify-center gap-3">
+                  <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-emerald-900 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]">
+                    <Play className="h-5 w-5" />
+                  </button>
+                  <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
+                    <Pause className="h-5 w-5" />
+                  </button>
+                  <button className="flex h-11 w-11 items-center justify-center rounded-full bg-red-500 text-white transition-colors hover:bg-red-600">
+                    <Clock3 className="h-5 w-5" />
+                  </button>
+                </div>
+              </article>
+
+              <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+                <p className="font-display text-lg font-semibold tracking-[-0.02em] text-[#18271d]">Session health</p>
+                <div className="mt-3 space-y-3">
+                  <div>
+                    <div className="mb-1.5 flex items-center justify-between text-xs text-[#6f8077]">
+                      <span>Focus retention</span>
+                      <span>84%</span>
+                    </div>
+                    <Progress value={84} className="h-2 bg-[#e7ece8]" />
+                  </div>
+                  <div>
+                    <div className="mb-1.5 flex items-center justify-between text-xs text-[#6f8077]">
+                      <span>Mood stability</span>
+                      <span>79%</span>
+                    </div>
+                    <Progress value={79} className="h-2 bg-[#e7ece8]" />
+                  </div>
+                </div>
+              </article>
+            </div>
           </section>
         </main>
       </div>
