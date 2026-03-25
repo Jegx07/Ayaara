@@ -18,7 +18,7 @@ class ThreeErrorBoundary extends React.Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: any, errorInfo: any) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('Three.js Error:', error, errorInfo);
   }
 

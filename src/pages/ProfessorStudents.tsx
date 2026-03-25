@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 
 interface Student { id: string; name: string; roll: string; dept: string; mli: number; status: 'Normal' | 'Critical' | 'Warning' }
@@ -31,8 +31,12 @@ export default function ProfessorStudents() {
   }, [q, dept, sort]);
 
   const statusBadge = (s: Student['status']) => {
-    const variants: Record<Student['status'], string> = { Normal: 'secondary', Warning: 'accent', Critical: 'destructive' };
-    return <Badge variant={variants[s] as any}>{s}</Badge>;
+    const variants: Record<Student['status'], NonNullable<BadgeProps['variant']>> = {
+      Normal: 'secondary',
+      Warning: 'outline',
+      Critical: 'destructive',
+    };
+    return <Badge variant={variants[s]}>{s}</Badge>;
   };
 
   return (
