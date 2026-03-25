@@ -1,413 +1,328 @@
-import React, { useState, useEffect } from 'react';
-import { AppSidebar } from '@/components/AppSidebar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  ArrowUpRight,
+  Bell,
+  CalendarDays,
+  CircleHelp,
+  Clock3,
+  FolderKanban,
+  LayoutDashboard,
+  LogOut,
+  Pause,
+  Play,
+  Search,
+  Settings,
+  Target,
+  TrendingUp,
+  Users,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, PieChart, Pie, Cell } from 'recharts';
-import { Brain, Award, CheckCircle, Target, Clock, BookOpen, Heart, Smile, Trophy, MessageSquare, Users, Briefcase, Bell, Zap, TrendingUp, Calendar, Star } from 'lucide-react';
-import FallingLeavesGame from '@/components/FallingLeavesGame';
+import { Progress } from '@/components/ui/progress';
+import { ResponsiveContainer, AreaChart, Area, BarChart, Bar, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import { cn } from '@/lib/utils';
 
-const skills = [
-  { name: 'React', progress: 75 },
-  { name: 'Node.js', progress: 60 },
-  { name: 'SQL', progress: 68 },
-  { name: 'AWS', progress: 40 },
+const navItems = [
+  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, badge: '' },
+  { label: 'Tasks', href: '/skills', icon: FolderKanban, badge: '12' },
+  { label: 'Calendar', href: '/career', icon: CalendarDays, badge: '' },
+  { label: 'Analytics', href: '/career-path', icon: TrendingUp, badge: '' },
+  { label: 'Team', href: '/mental-support', icon: Users, badge: '' },
 ];
 
-const activities = [
-  { title: 'Completed Assignment: Data Structures', time: '2 hours ago' },
-  { title: 'Study Session: Algorithms (2h)', time: 'Yesterday' },
-  { title: 'Joined Workshop: Cloud Basics', time: '2 days ago' },
+const generalItems = [
+  { label: 'Settings', href: '/settings', icon: Settings },
+  { label: 'Help', href: '/profile', icon: CircleHelp },
+  { label: 'Logout', href: '/auth', icon: LogOut },
 ];
 
-const achievements = [
-  { title: 'Top Performer of the Week', icon: Award, color: 'text-primary', progress: 80 },
-  { title: '100% Attendance', icon: CheckCircle, color: 'text-success', progress: 65 },
-  { title: 'Completed 5 Assignments', icon: BookOpen, color: 'text-accent', progress: 90 },
-  { title: 'Skill Level Up', icon: Target, color: 'text-destructive', progress: 50 },
+const kpis = [
+  { label: 'Total projects', value: '24', note: 'Increased from last month', highlighted: true },
+  { label: 'Ended projects', value: '10', note: 'Increased from last month', highlighted: false },
+  { label: 'Running projects', value: '12', note: 'Increased from last month', highlighted: false },
+  { label: 'Pending project', value: '2', note: 'In discuss', highlighted: false },
 ];
 
-// New data for enhanced dashboard
-const motivationData = [
-  { day: 'Mon', mli: 75 },
-  { day: 'Tue', mli: 82 },
-  { day: 'Wed', mli: 68 },
-  { day: 'Thu', mli: 90 },
-  { day: 'Fri', mli: 85 },
-  { day: 'Sat', mli: 78 },
-  { day: 'Sun', mli: 88 },
+const analytics = [
+  { day: 'S', score: 42 },
+  { day: 'M', score: 76 },
+  { day: 'T', score: 68 },
+  { day: 'W', score: 84 },
+  { day: 'T', score: 54 },
+  { day: 'F', score: 48 },
+  { day: 'S', score: 62 },
 ];
 
-const vitalSignsData = [
-  { time: '8:00', heartRate: 72, focusScore: 85 },
-  { time: '12:00', heartRate: 78, focusScore: 90 },
-  { time: '16:00', heartRate: 75, focusScore: 80 },
-  { time: '20:00', heartRate: 70, focusScore: 88 },
+const skillProgress = [
+  { label: 'React architecture', value: 87, status: 'Completed' },
+  { label: 'Data structures', value: 63, status: 'In progress' },
+  { label: 'Cloud fundamentals', value: 48, status: 'Pending' },
+  { label: 'Career prep', value: 72, status: 'In progress' },
 ];
 
-const studyFocusData = [
-  { day: 'Mon', study: 3, focus: 4 },
-  { day: 'Tue', study: 2.5, focus: 3.5 },
-  { day: 'Wed', study: 4, focus: 4.5 },
-  { day: 'Thu', study: 3.5, focus: 4 },
-  { day: 'Fri', study: 2, focus: 3 },
-  { day: 'Sat', study: 1.5, focus: 2.5 },
-  { day: 'Sun', study: 2, focus: 3 },
+const motivationStatuses = [
+  { name: 'Completed', value: 41, color: 'bg-emerald-700' },
+  { name: 'In progress', value: 37, color: 'bg-emerald-500' },
+  { name: 'Pending', value: 22, color: 'bg-slate-300' },
 ];
 
-const moodHistory = [
-  { date: '2023-10-01', mood: 'Happy', emoji: '😊' },
-  { date: '2023-10-02', mood: 'Focused', emoji: '🎯' },
-  { date: '2023-10-03', mood: 'Tired', emoji: '😴' },
-  { date: '2023-10-04', mood: 'Motivated', emoji: '💪' },
-  { date: '2023-10-05', mood: 'Calm', emoji: '🧘' },
-];
-
-
-
-const aiQuotes = [
-  "Believe you can and you're halfway there. - Theodore Roosevelt",
-  "The only way to do great work is to love what you do. - Steve Jobs",
-  "Your limitation—it's only your imagination.",
-];
-
-const notifications = [
-  { message: 'Time for a 5-min break!', type: 'reminder' },
-  { message: 'Mentor session in 30 mins', type: 'session' },
-  { message: 'New wellness tip available', type: 'tip' },
-];
-
-const moods = [
-  { label: 'Stressed', emoji: '😰' },
-  { label: 'Angry', emoji: '😠' },
-  { label: 'Motivated', emoji: '💪' },
-  { label: 'Calm', emoji: '🧘' },
-  { label: 'Happy', emoji: '😊' },
-  { label: 'Sad', emoji: '😢' },
-];
+const completion = 41;
 
 export default function Dashboard() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [currentMood, setCurrentMood] = useState('Calm');
-  const [selectedQuote, setSelectedQuote] = useState(aiQuotes[Math.floor(Math.random() * aiQuotes.length)]);
-  const [mentorFeedback, setMentorFeedback] = useState('');
-  const [careerGoal, setCareerGoal] = useState('Software Engineer');
-  const [showNotifications, setShowNotifications] = useState(true);
-
-  // Simulate automatic mood detection from wrist band
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const randomMood = moods[Math.floor(Math.random() * moods.length)].label;
-      setCurrentMood(randomMood);
-    }, 10000); // Change mood every 10 seconds for demo
-    return () => clearInterval(interval);
-  }, []);
+  const location = useLocation();
 
   return (
-    <div className="flex min-h-screen w-full bg-background">
-      <AppSidebar userRole="student" isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      <main className={`flex-1 ${isCollapsed ? 'lg:ml-16' : 'lg:ml-64'} transition-all duration-300 p-6 space-y-6`}>
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-primary">Dashboard</h1>
-            <p className="text-muted-foreground">Track your motivation, wellness, and career readiness</p>
+    <div className="min-h-screen bg-[#eaeeeb] p-3 sm:p-5">
+      <div className="mx-auto grid min-h-[100dvh] max-w-[1480px] grid-cols-1 gap-3 rounded-[30px] border border-[#d8ded9] bg-[#f6f8f6] p-3 shadow-[0_22px_60px_-36px_rgba(19,39,26,0.28)] lg:grid-cols-[250px_minmax(0,1fr)]">
+        <aside className="rounded-[24px] border border-[#dde3df] bg-white p-5">
+          <div className="mb-8 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-600/40 bg-emerald-600/10">
+              <Target className="h-5 w-5 text-emerald-700" />
+            </div>
+            <div>
+              <p className="font-display text-xl font-semibold leading-none tracking-[-0.02em] text-[#16211a]">MotiTrack</p>
+              <p className="mt-1 text-xs font-medium text-[#6f7f75]">Student hub</p>
+            </div>
           </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" onClick={() => setShowNotifications(!showNotifications)} className="relative">
-              <Bell className="w-5 h-5" />
-              {showNotifications && (
-                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
-              )}
+
+          <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8d9992]">Menu</div>
+          <nav className="space-y-1.5">
+            {navItems.map((item) => {
+              const active = location.pathname === item.href || (item.href === '/dashboard' && location.pathname === '/student');
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={cn(
+                    'group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
+                    active
+                      ? 'bg-emerald-600 text-white shadow-[0_14px_30px_-16px_rgba(24,116,78,0.85)]'
+                      : 'text-[#4f6056] hover:bg-[#eef3ef] hover:text-[#1d2a22]',
+                  )}
+                >
+                  <span className="flex items-center gap-2.5">
+                    <item.icon className="h-4.5 w-4.5" />
+                    {item.label}
+                  </span>
+                  {item.badge ? (
+                    <span className={cn('rounded-md px-1.5 py-0.5 text-[10px] font-semibold', active ? 'bg-white/20' : 'bg-emerald-600 text-white')}>
+                      {item.badge}
+                    </span>
+                  ) : null}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="mb-4 mt-8 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8d9992]">General</div>
+          <div className="space-y-1.5">
+            {generalItems.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-[#6a7970] transition-colors hover:bg-[#eef3ef] hover:text-[#1d2a22]"
+              >
+                <item.icon className="h-4.5 w-4.5" />
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-10 rounded-2xl border border-emerald-900/20 bg-[radial-gradient(80%_120%_at_0%_0%,#145f3f_0%,#0f3224_55%,#0c2519_100%)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]">
+            <p className="font-display text-lg font-semibold tracking-[-0.02em]">Focus mode</p>
+            <p className="mt-1 text-xs text-emerald-100/90">Take your next 25-minute sprint.</p>
+            <Button className="mt-4 h-9 w-full rounded-full bg-white text-xs font-semibold text-emerald-900 hover:bg-white/90">
+              Start sprint
             </Button>
           </div>
-        </div>
+        </aside>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-blue-600" />
-                Motivation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-blue-600">85%</div>
-              <p className="text-sm text-blue-500">+5% from last week</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Target className="w-5 h-5 text-green-600" />
-                Focus Score
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-green-600">88%</div>
-              <p className="text-sm text-green-500">Peak performance</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-purple-600" />
-                Study Streak
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-purple-600">12 days</div>
-              <p className="text-sm text-purple-500">Keep it up!</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Heart className="w-5 h-5 text-red-600" />
-                Heart Rate
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-red-600">72 bpm</div>
-              <p className="text-sm text-red-500">Resting rate</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Interactive Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                Motivation Index (MLI)
-              </CardTitle>
-              <CardDescription>Weekly motivation trends</CardDescription>
-            </CardHeader>
-            <CardContent className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={motivationData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="day" stroke="hsl(var(--muted-foreground))" />
-                  <YAxis stroke="hsl(var(--muted-foreground))" />
-                  <Tooltip contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }} />
-                  <Line type="monotone" dataKey="mli" stroke="hsl(var(--primary))" strokeWidth={3} />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Heart className="w-5 h-5 text-red-500" />
-                Vital Signs Monitoring
-              </CardTitle>
-              <CardDescription>Heart rate and focus score</CardDescription>
-            </CardHeader>
-            <CardContent className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={vitalSignsData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="time" stroke="hsl(var(--muted-foreground))" />
-                  <YAxis stroke="hsl(var(--muted-foreground))" />
-                  <Tooltip contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }} />
-                  <Line type="monotone" dataKey="heartRate" stroke="hsl(var(--destructive))" strokeWidth={2} />
-                  <Line type="monotone" dataKey="focusScore" stroke="hsl(var(--primary))" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-green-500" />
-                Study vs Focus Hours
-              </CardTitle>
-              <CardDescription>Weekly comparison</CardDescription>
-            </CardHeader>
-            <CardContent className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={studyFocusData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="day" stroke="hsl(var(--muted-foreground))" />
-                  <YAxis stroke="hsl(var(--muted-foreground))" />
-                  <Tooltip contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }} />
-                  <Bar dataKey="study" fill="hsl(var(--primary))" />
-                  <Bar dataKey="focus" fill="hsl(var(--success))" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Daily Mood Tracker */}
-        <Card className="rounded-2xl shadow-lg">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-primary">We detected you’re feeling currently:</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex justify-center gap-8 mb-6">
-              {moods.map((mood) => {
-                const isActive = currentMood === mood.label;
-                return (
-                  <div
-                    key={mood.label}
-                    className={`mood-face bg-white rounded-xl p-6 text-center transition-all duration-200 ${
-                      isActive ? 'border-4 border-green-500 shadow-lg' : 'border-2 border-transparent'
-                    }`}
-                    aria-label={mood.label}
-                  >
-                    <div className="text-6xl mb-3">{mood.emoji}</div>
-                    <span className="font-medium text-lg text-gray-700">{mood.label}</span>
-                  </div>
-                );
-              })}
+        <main className="rounded-[24px] border border-[#dde3df] bg-white p-4 sm:p-6">
+          <header className="mb-5 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+            <div className="relative w-full max-w-xl">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7f8e86]" />
+              <Input
+                placeholder="Search task"
+                className="h-12 rounded-2xl border-[#dbe2de] bg-[#f8faf8] pl-11 text-sm text-[#203228] placeholder:text-[#8a9890] focus-visible:ring-emerald-600"
+              />
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Falling Leaves Game */}
-        <FallingLeavesGame />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9e0dc] bg-[#f7f9f7] text-[#617067] transition-colors hover:bg-[#edf3ef]">
+                <Bell className="h-4 w-4" />
+              </button>
+              <div className="flex items-center gap-3 rounded-2xl border border-[#d9e0dc] bg-[#f8faf8] px-3 py-2.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-xs font-semibold text-emerald-800">TM</div>
+                <div>
+                  <p className="text-sm font-semibold text-[#1f2d24]">Totok Michael</p>
+                  <p className="text-xs text-[#7a8a81]">tmichael20@mail.com</p>
+                </div>
+              </div>
+            </div>
+          </header>
 
-        {/* Mentor Feedback Loop */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-blue-500" />
-              Mentor Feedback Loop
-            </CardTitle>
-            <CardDescription>Receive real-time comments and suggestions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Textarea
-              placeholder="Latest feedback from your mentor..."
-              value={mentorFeedback}
-              onChange={(e) => setMentorFeedback(e.target.value)}
-              rows={3}
-            />
-            <Button className="mt-2">Send Response</Button>
-          </CardContent>
-        </Card>
-
-        {/* Personalized AI Coach */}
-        <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-purple-600" />
-              Personalized AI Coach
-            </CardTitle>
-            <CardDescription>Motivational quotes and daily suggestions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center">
-              <p className="text-lg italic mb-4">"{selectedQuote}"</p>
-              <Button variant="outline" onClick={() => setSelectedQuote(aiQuotes[Math.floor(Math.random() * aiQuotes.length)])}>
-                New Quote
+          <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h1 className="font-display text-[42px] font-semibold leading-[0.95] tracking-[-0.035em] text-[#152319]">Dashboard</h1>
+              <p className="mt-2 max-w-2xl text-sm text-[#7d8b84]">Plan, prioritize, and accomplish your study targets with clarity.</p>
+            </div>
+            <div className="flex flex-wrap gap-2.5">
+              <Button className="h-11 rounded-full bg-emerald-700 px-6 text-sm font-semibold text-white shadow-[0_14px_30px_-16px_rgba(24,116,78,0.9)] hover:bg-emerald-800">
+                + Add project
+              </Button>
+              <Button variant="outline" className="h-11 rounded-full border-emerald-700/45 bg-white px-6 text-sm font-semibold text-emerald-800 hover:bg-emerald-50">
+                Import data
               </Button>
             </div>
-            <div className="mt-4">
-              <h4 className="font-medium mb-2">Daily Habit Suggestion</h4>
-              <p>Take a 10-minute walk to boost your focus and reduce stress.</p>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Resource Hub */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-green-500" />
-              Resource Hub
-            </CardTitle>
-            <CardDescription>Access stress-management activities and productivity templates</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline">Guided Meditation</Button>
-              <Button variant="outline">Productivity Templates</Button>
-              <Button variant="outline">Stress Management Tips</Button>
-              <Button variant="outline">Time Management Tools</Button>
-            </div>
-          </CardContent>
-        </Card>
+          <section className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4">
+            {kpis.map((card) => (
+              <article
+                key={card.label}
+                className={cn(
+                  'rounded-2xl border p-4 transition-all duration-300',
+                  card.highlighted
+                    ? 'border-emerald-800/20 bg-[radial-gradient(120%_120%_at_0%_0%,#2e9e68_0%,#18744e_58%,#145d3f_100%)] text-white shadow-[0_18px_40px_-20px_rgba(17,84,56,0.9)]'
+                    : 'border-[#dde3df] bg-[#fbfcfb] text-[#1f2d24] hover:border-emerald-700/30',
+                )}
+              >
+                <div className="mb-3 flex items-center justify-between">
+                  <p className={cn('text-sm font-medium', card.highlighted ? 'text-emerald-50' : 'text-[#32443a]')}>{card.label}</p>
+                  <span className={cn('flex h-7 w-7 items-center justify-center rounded-full border', card.highlighted ? 'border-white/45' : 'border-[#c4cec8]')}>
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
+                <p className="font-display text-5xl font-semibold leading-none tracking-[-0.04em]">{card.value}</p>
+                <p className={cn('mt-3 text-xs font-medium', card.highlighted ? 'text-emerald-100' : 'text-[#7c8b82]')}>{card.note}</p>
+              </article>
+            ))}
+          </section>
 
-        {/* Community Support Forum */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-indigo-500" />
-              Community Support Forum
-            </CardTitle>
-            <CardDescription>Share experiences and seek advice</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="p-3 border rounded">How do you stay motivated during exams? - 5 replies</div>
-              <div className="p-3 border rounded">Tips for better sleep schedule - 3 replies</div>
-              <Button className="w-full mt-4">Join Discussion</Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Career Tracker */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-teal-500" />
-              Career Tracker
-            </CardTitle>
-            <CardDescription>Track progress towards career goals</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Current Goal</label>
-                <Input value={careerGoal} onChange={(e) => setCareerGoal(e.target.value)} />
+          <section className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.55fr_0.95fr]">
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <div className="mb-2 flex items-center justify-between">
+                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Project analytics</p>
               </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Progress</label>
-                <Progress value={75} />
-                <p className="text-sm text-muted-foreground mt-1">75% towards Software Engineer role</p>
+              <div className="h-[252px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={analytics} barCategoryGap={28}>
+                    <CartesianGrid vertical={false} stroke="#e6ece8" strokeDasharray="3 4" />
+                    <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fill: '#809087', fontSize: 12 }} />
+                    <YAxis hide domain={[0, 100]} />
+                    <Tooltip
+                      cursor={{ fill: '#eff5f1' }}
+                      contentStyle={{ borderRadius: '14px', border: '1px solid #d6dfd8', backgroundColor: '#ffffff' }}
+                    />
+                    <Bar dataKey="score" radius={[20, 20, 20, 20]} fill="#1f7a52" />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-              <Button>Add Internship Application</Button>
-            </div>
-          </CardContent>
-        </Card>
+            </article>
 
-        {/* Push Notifications */}
-        {showNotifications && (
-          <Card className="border-l-4 border-l-red-500">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Bell className="w-5 h-5 text-red-500" />
-                Notifications
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {notifications.map((n, i) => (
-                  <div key={i} className="flex items-center justify-between p-2 bg-muted rounded">
-                    <span>{n.message}</span>
-                    <Badge variant={n.type === 'reminder' ? 'default' : 'secondary'}>{n.type}</Badge>
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Motivation status</p>
+              <p className="mt-1 text-sm text-[#7d8c84]">Weekly completion and readiness distribution</p>
+
+              <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:items-start">
+                <div
+                  className="relative h-40 w-40 rounded-full"
+                  style={{ background: `conic-gradient(#1d7d54 ${completion * 3.6}deg, #cfdbd4 ${completion * 3.6}deg 360deg)` }}
+                >
+                  <div className="absolute inset-[16px] flex items-center justify-center rounded-full bg-white text-center shadow-[inset_0_0_0_1px_#deE5E0]">
+                    <div>
+                      <p className="font-display text-4xl font-semibold leading-none tracking-[-0.03em] text-[#122218]">{completion}%</p>
+                      <p className="mt-1 text-xs font-medium text-[#7c8b82]">Project ended</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full space-y-3">
+                  {motivationStatuses.map((status) => (
+                    <div key={status.name}>
+                      <div className="mb-1.5 flex items-center justify-between text-sm">
+                        <span className="font-medium text-[#283930]">{status.name}</span>
+                        <span className="text-[#708077]">{status.value}%</span>
+                      </div>
+                      <Progress value={status.value} className="h-2 bg-[#e7ece8]" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.55fr_0.95fr]">
+            <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-4">
+              <div className="mb-4 flex items-center justify-between">
+                <p className="font-display text-[24px] font-semibold tracking-[-0.03em] text-[#18271d]">Skill progress</p>
+                <Button variant="outline" className="h-8 rounded-full border-[#d6dfd8] px-3 text-xs font-semibold text-[#33453b] hover:bg-[#eff4f1]">
+                  + Add skill
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                {skillProgress.map((skill) => (
+                  <div key={skill.label}>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <p className="text-sm font-semibold text-[#25362d]">{skill.label}</p>
+                      <span className="rounded-md bg-[#ecf3ef] px-2 py-1 text-xs font-medium text-[#5f7268]">{skill.status}</span>
+                    </div>
+                    <Progress value={skill.value} className="h-2.5 bg-[#e6ece8]" />
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
-        )}
-      </main>
+
+              <div className="mt-6 h-[178px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={analytics.map((point, index) => ({
+                      ...point,
+                      consistency: [52, 64, 61, 78, 70, 68, 72][index],
+                    }))}
+                  >
+                    <defs>
+                      <linearGradient id="consistencyFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#2A8A5E" stopOpacity={0.34} />
+                        <stop offset="95%" stopColor="#2A8A5E" stopOpacity={0.04} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid vertical={false} stroke="#edf2ef" />
+                    <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fill: '#819189', fontSize: 12 }} />
+                    <YAxis hide domain={[0, 100]} />
+                    <Tooltip contentStyle={{ borderRadius: '14px', border: '1px solid #d6dfd8', backgroundColor: '#ffffff' }} />
+                    <Area type="monotone" dataKey="consistency" stroke="#1E7D54" strokeWidth={2.4} fill="url(#consistencyFill)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </article>
+
+            <article className="rounded-2xl border border-[#dde3df] bg-[radial-gradient(130%_140%_at_80%_-10%,#1f7f56_0%,#134931_48%,#102d20_100%)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+              <p className="font-display text-[24px] font-semibold tracking-[-0.03em]">Focus timer</p>
+              <p className="mt-1 text-sm text-emerald-100/85">Current deep-work session</p>
+
+              <div className="mt-7 text-center">
+                <Clock3 className="mx-auto mb-3 h-8 w-8 text-emerald-100" />
+                <p className="font-display text-[50px] font-semibold leading-none tracking-[-0.04em]">01:24:08</p>
+                <p className="mt-2 text-sm text-emerald-100/80">Session quality: stable</p>
+              </div>
+
+              <div className="mt-8 flex items-center justify-center gap-3">
+                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-emerald-900 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]">
+                  <Play className="h-5 w-5" />
+                </button>
+                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
+                  <Pause className="h-5 w-5" />
+                </button>
+                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
+                  <LogOut className="h-5 w-5" />
+                </button>
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
