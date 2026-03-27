@@ -239,12 +239,13 @@ export default function LandingPage(): JSX.Element {
       {/* Hero Section */}
       <section className="relative pt-24 md:pt-32 pb-12 md:pb-16 px-4 md:px-8 lg:px-12">
         {/* Background decorative blobs */}
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 w-44 h-44 md:w-56 md:h-56 bg-[#ddf7b7] rounded-full flex items-center justify-center -z-20" />
         <img
           src="/ayaara logo.jpeg"
           alt="Ayaara logo"
-          className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 rounded-full object-cover -z-10 opacity-80"
+          className="absolute top-6 right-6 md:top-10 md:right-10 w-36 h-36 md:w-52 md:h-52 rounded-full object-cover border-2 border-white shadow-lg -z-10"
         />
-        <div className="absolute -left-20 top-96 w-40 h-40 md:w-64 md:h-64 bg-[#ddf7b74c] rounded-full blur-3xl -z-10" />
+        <div className="absolute -left-20 top-96 w-40 h-40 md:w-64 md:h-64 bg-[#ddf7b74c] rounded-full blur-3xl -z-30" />
 
         <div className="max-w-7xl mx-auto">
           {/* Hero Heading */}
