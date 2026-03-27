@@ -1,164 +1,92 @@
-import { NavigationSidebarSection } from "./skill-assessment/NavigationSidebarSection";
-import { SkillRadarSection } from "./skill-assessment/SkillRadarSection";
-import { SkillRecommendationsSection } from "./skill-assessment/SkillRecommendationsSection";
-import { SummaryMetricsSection } from "./skill-assessment/SummaryMetricsSection";
-import { UpcomingAssessmentsSection } from "./skill-assessment/UpcomingAssessmentsSection";
+import React from 'react';
+import { BookOpen, Brain, CheckCircle2, Sparkles, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import StudentPortalLayout from '@/components/StudentPortalLayout';
 
-const summaryMetrics = [
-  {
-    left: "252px",
-    bgColor: "bg-[#def7b8]",
-    emoji: "💻",
-    percentage: "78%",
-    label: "Programming",
-  },
-  {
-    left: "540px",
-    bgColor: "bg-[#e0dbff]",
-    emoji: "🗣",
-    percentage: "82%",
-    label: "Communication",
-  },
-  {
-    left: "828px",
-    bgColor: "bg-[#fff2d1]",
-    emoji: "🤝",
-    percentage: "88%",
-    label: "Teamwork",
-  },
-  {
-    left: "1116px",
-    bgColor: "bg-[#d9f2ff]",
-    emoji: "⏱",
-    percentage: "60%",
-    label: "Time Mgmt",
-  },
+const categories = [
+  { label: 'Frontend Engineering', score: 82, advice: 'Strong. Build one advanced animation-heavy project.' },
+  { label: 'Backend Foundations', score: 69, advice: 'Good base. Focus on API design and auth flows.' },
+  { label: 'Data Literacy', score: 58, advice: 'Improve SQL and dashboard storytelling.' },
+  { label: 'System Design', score: 55, advice: 'Practice tradeoffs, scaling and architecture docs.' },
 ];
 
-const skillCards = [
-  {
-    top: "222px",
-    left: "832px",
-    emoji: "💻",
-    title: "Programming",
-    subtitle: "Python, Java, C++",
-    barWidth: "w-[187px]",
-    percentage: "78%",
-    percentageColor: "text-[#3f8c0c]",
-  },
-  {
-    top: "222px",
-    left: "1126px",
-    emoji: "🧮",
-    title: "Mathematics",
-    subtitle: "Calculus, Linear Algebra",
-    barWidth: "w-[156px]",
-    percentage: "65%",
-    percentageColor: "text-[#7c6b00]",
-  },
-  {
-    top: "342px",
-    left: "832px",
-    emoji: "🗣",
-    title: "Communication",
-    subtitle: "Written & verbal skills",
-    barWidth: "w-[197px]",
-    percentage: "82%",
-    percentageColor: "text-[#3f8c0c]",
-  },
-  {
-    top: "342px",
-    left: "1126px",
-    emoji: "🧠",
-    title: "Critical Thinking",
-    subtitle: "Problem solving & logic",
-    barWidth: "w-[170px]",
-    percentage: "71%",
-    percentageColor: "text-[#3f8c0c]",
-  },
-  {
-    top: "462px",
-    left: "832px",
-    emoji: "🤝",
-    title: "Teamwork",
-    subtitle: "Collaboration & leadership",
-    barWidth: "w-[211px]",
-    percentage: "88%",
-    percentageColor: "text-[#3f8c0c]",
-  },
-  {
-    top: "462px",
-    left: "1126px",
-    emoji: "⏱",
-    title: "Time Management",
-    subtitle: "Planning & prioritisation",
-    barWidth: "w-36",
-    percentage: "60%",
-    percentageColor: "text-[#c05000]",
-  },
+const recommendations = [
+  'Complete TypeScript deep-dive module',
+  'Ship one full-stack capstone with deployment',
+  'Run two mock technical interviews this month',
+  'Publish a portfolio case study for your best project',
 ];
 
-export const SkillAssessment = (): JSX.Element => {
+export default function SkillsPage() {
   return (
-    <div className="bg-[#f4f9ef] w-full min-w-[1440px] min-h-[1080px] relative">
-      <NavigationSidebarSection />
-      <SummaryMetricsSection />
+    <StudentPortalLayout
+      title="Skill Assessment"
+      subtitle="Measure your current strengths and close the gaps faster"
+      actions={<Button className="bg-[#1d7d54] hover:bg-[#145d3f]">Run New Assessment</Button>}
+    >
+      <div className="grid gap-4 lg:grid-cols-3">
+        <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5 lg:col-span-2">
+          <p className="font-display text-xl font-semibold text-[#18271d]">Competency Breakdown</p>
+          <div className="mt-4 space-y-4">
+            {categories.map((item) => (
+              <div key={item.label} className="rounded-xl border border-[#e3e9e5] bg-white p-4">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold text-[#24362c]">{item.label}</p>
+                  <p className="text-sm font-semibold text-[#1d7d54]">{item.score}%</p>
+                </div>
+                <Progress value={item.score} className="h-2 bg-[#e7ece8]" />
+                <p className="mt-2 text-xs text-[#76877e]">{item.advice}</p>
+              </div>
+            ))}
+          </div>
+        </article>
 
-      {summaryMetrics.map((metric, index) => (
-        <div
-          key={index}
-          className="absolute top-[92px] w-[268px] h-[110px] bg-white rounded-[20px] shadow-[0px_4px_20px_#0000000f]"
-          style={{ left: metric.left }}
-        >
-          <div
-            className={`absolute top-5 left-5 w-11 h-11 ${metric.bgColor} rounded-xl`}
-          />
-          <div className="absolute top-[30px] left-8 [font-family:'Inter-Regular',Helvetica] font-normal text-[#141a12] text-lg tracking-[0] leading-[normal] whitespace-nowrap">
-            {metric.emoji}
+        <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5">
+          <p className="font-display text-xl font-semibold text-[#18271d]">Readiness Snapshot</p>
+          <div className="mt-4 space-y-3">
+            <div className="rounded-xl bg-gradient-to-br from-[#1d7d54] to-[#145d3f] p-4 text-white">
+              <p className="text-xs uppercase tracking-wide text-white/80">Career match</p>
+              <p className="font-display text-4xl font-semibold">78%</p>
+              <p className="mt-1 text-xs text-white/80">Target role: Full Stack Developer</p>
+            </div>
+            <div className="rounded-xl border border-[#e3e9e5] bg-white p-4 text-sm text-[#425248]">
+              <p className="mb-2 font-semibold text-[#24362c]">Top strengths</p>
+              <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#1d7d54]" /> UI implementation quality</p>
+              <p className="mt-1 flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#1d7d54]" /> Product thinking</p>
+              <p className="mt-1 flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#1d7d54]" /> Consistency under deadlines</p>
+            </div>
           </div>
-          <div className="absolute top-[22px] left-[72px] [font-family:'Inter-ExtraBold',Helvetica] font-extrabold text-[#141a12] text-[28px] tracking-[0] leading-[normal]">
-            {metric.percentage}
-          </div>
-          <div className="absolute top-[54px] left-[72px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#596654] text-xs tracking-[0] leading-[normal]">
-            {metric.label}
-          </div>
-        </div>
-      ))}
+        </article>
+      </div>
 
-      <SkillRadarSection />
+      <section className="mt-4 grid gap-4 lg:grid-cols-2">
+        <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5">
+          <p className="font-display text-xl font-semibold text-[#18271d]">Recommended Next Moves</p>
+          <div className="mt-3 space-y-2">
+            {recommendations.map((task) => (
+              <div key={task} className="flex items-start gap-2 rounded-lg border border-[#e3e9e5] bg-white p-3 text-sm text-[#425248]">
+                <Sparkles className="mt-0.5 h-4 w-4 text-[#1d7d54]" />
+                <span>{task}</span>
+              </div>
+            ))}
+          </div>
+        </article>
 
-      {skillCards.map((card, index) => (
-        <div
-          key={index}
-          className="absolute w-[280px] h-[106px] bg-white rounded-[20px] shadow-[0px_4px_20px_#0000000f]"
-          style={{ top: card.top, left: card.left }}
-        >
-          <div className="absolute top-5 left-5 w-9 h-9 bg-[#def7b8] rounded-[10px]" />
-          <div className="top-7 left-7 [font-family:'Inter-Regular',Helvetica] font-normal text-[#141a12] text-base whitespace-nowrap absolute tracking-[0] leading-[normal]">
-            {card.emoji}
+        <article className="rounded-2xl border border-[#dde3df] bg-[#fbfcfb] p-5">
+          <p className="font-display text-xl font-semibold text-[#18271d]">Action Center</p>
+          <div className="mt-3 grid gap-2">
+            <button className="flex items-center justify-between rounded-lg border border-[#dde3df] bg-white px-3 py-2 text-sm text-[#425248] hover:bg-[#f8faf8]">
+              <span className="flex items-center gap-2"><BookOpen className="h-4 w-4 text-[#1d7d54]" /> Start learning plan</span>
+              <Target className="h-4 w-4 text-[#1d7d54]" />
+            </button>
+            <button className="flex items-center justify-between rounded-lg border border-[#dde3df] bg-white px-3 py-2 text-sm text-[#425248] hover:bg-[#f8faf8]">
+              <span className="flex items-center gap-2"><Brain className="h-4 w-4 text-[#1d7d54]" /> Skill gap simulation</span>
+              <Target className="h-4 w-4 text-[#1d7d54]" />
+            </button>
           </div>
-          <div className="absolute top-[22px] left-[66px] [font-family:'Inter-Bold',Helvetica] font-bold text-[#141a12] text-sm tracking-[0] leading-[normal]">
-            {card.title}
-          </div>
-          <div className="absolute top-10 left-[66px] [font-family:'Inter-Regular',Helvetica] font-normal text-[#99a593] text-[11px] tracking-[0] leading-[normal] whitespace-nowrap">
-            {card.subtitle}
-          </div>
-          <div className="absolute top-[62px] left-5 w-60 h-2 bg-[#e5f5d6] rounded" />
-          <div
-            className={`absolute top-[62px] left-5 ${card.barWidth} h-2 bg-[#8cd645] rounded`}
-          />
-          <div
-            className={`top-[76px] left-5 [font-family:'Inter-SemiBold',Helvetica] font-semibold ${card.percentageColor} text-[11px] absolute tracking-[0] leading-[normal] whitespace-nowrap`}
-          >
-            {card.percentage}
-          </div>
-        </div>
-      ))}
-
-      <SkillRecommendationsSection />
-      <UpcomingAssessmentsSection />
-    </div>
+        </article>
+      </section>
+    </StudentPortalLayout>
   );
-};
-
-export default SkillAssessment;
+}

@@ -6,7 +6,6 @@ import {
   Briefcase,
   HeartPulse,
   Home,
-  MessageCircle,
   LogOut,
   Search,
   Settings,
@@ -26,7 +25,6 @@ interface StudentPortalLayoutProps {
 
 const navItems = [
   { label: 'Dashboard', path: '/dashboard', icon: Home },
-  { label: 'AI Chatbot', path: '/chatbot', icon: MessageCircle },
   { label: 'Skill Assessment', path: '/skills', icon: Brain },
   { label: 'Career Assistant', path: '/career', icon: Briefcase },
   { label: 'Career Path', path: '/career-path', icon: Waypoints },
