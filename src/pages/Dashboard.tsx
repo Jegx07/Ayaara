@@ -54,8 +54,8 @@ export default function Dashboard() {
 
   return (
     <div className="relative flex min-h-screen overflow-hidden bg-[#edf1fb] text-[#23243a]">
-      <div className="pointer-events-none absolute left-[-120px] top-[60%] h-72 w-72 rounded-full bg-[#d8dcff] blur-3xl animate-float-slow" />
-      <div className="pointer-events-none absolute right-[-80px] top-10 h-72 w-72 rounded-full bg-[#edd8ff] blur-3xl animate-float-slow delay-300" />
+      <div className="pointer-events-none absolute left-[-120px] top-[60%] h-72 w-72 rounded-full bg-[#d8dcff] blur-3xl" />
+      <div className="pointer-events-none absolute right-[-80px] top-10 h-72 w-72 rounded-full bg-[#edd8ff] blur-3xl" />
 
       <aside className="relative z-10 hidden w-64 border-r border-white/60 bg-white/55 p-6 backdrop-blur-xl lg:block">
         <div className="mb-10 flex items-center gap-2">
@@ -95,9 +95,9 @@ export default function Dashboard() {
         </Link>
       </aside>
 
-      <div className="relative z-10 flex-1 p-4 sm:p-6 animate-fade-in-up">
+      <div className="relative z-10 flex-1 p-4 sm:p-6">
         <div className="mx-auto max-w-[1220px] rounded-[28px] border border-white/70 bg-white/45 p-4 shadow-[0_20px_60px_rgba(62,79,150,0.15)] backdrop-blur-xl sm:p-6">
-          <header className="mb-5 flex items-center gap-3 animate-fade-in-down">
+          <header className="mb-5 flex items-center gap-3">
             <div className="flex flex-1 items-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-2">
               <Search className="h-4 w-4 text-[#a4abcb]" />
               <Input
@@ -116,11 +116,11 @@ export default function Dashboard() {
             </div>
           </header>
 
-          <h1 className="mb-4 font-display text-5xl font-semibold tracking-[-0.05em] text-[#242743] animate-fade-in-up delay-100">Dashboard</h1>
+          <h1 className="mb-4 font-display text-5xl font-semibold tracking-[-0.04em] text-[#242743]">Dashboard</h1>
 
           <div className="grid gap-4 lg:grid-cols-12">
-            <section className="space-y-4 lg:col-span-8 animate-fade-in-up delay-200">
-              <article className="rounded-3xl border border-white/70 bg-gradient-to-br from-[#f2f4ff] to-[#f9f7e7] p-5 hover-lift">
+            <section className="space-y-4 lg:col-span-8">
+              <article className="rounded-3xl border border-white/70 bg-gradient-to-br from-[#f2f4ff] to-[#f9f7e7] p-5">
                 <p className="text-sm text-[#6f78a0]">{financeStats[0].title}</p>
                 <p className="mt-1 font-display text-[58px] font-semibold leading-none tracking-[-0.05em] text-[#2a2f4e]">{financeStats[0].value}</p>
                 <p className="mt-1 text-sm text-[#7480ab]">{financeStats[0].note}</p>
@@ -132,7 +132,7 @@ export default function Dashboard() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 {financeStats.slice(1).map((item) => (
-                  <article key={item.title} className="rounded-3xl border border-white/70 bg-white/75 p-5 hover-lift">
+                  <article key={item.title} className="rounded-3xl border border-white/70 bg-white/75 p-5">
                     <div className="mb-2 flex items-center justify-between">
                       <p className="text-sm text-[#6f78a0]">{item.title}</p>
                       <span className={cn('rounded-full px-2 py-1 text-xs font-semibold', item.trend?.startsWith('+') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-600')}>
@@ -146,7 +146,7 @@ export default function Dashboard() {
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <article className="rounded-3xl border border-white/70 bg-white/75 p-5 hover-lift">
+                <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <p className="text-sm font-semibold text-[#2b3156]">Expense split</p>
                     <button className="text-xs font-semibold text-[#4f56cb]">Show more</button>
@@ -175,7 +175,7 @@ export default function Dashboard() {
                   </div>
                 </article>
 
-                <article className="rounded-3xl border border-white/70 bg-white/75 p-5 hover-lift">
+                <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
                   <p className="text-sm font-semibold text-[#2b3156]">Revenue flow</p>
                   <p className="mt-1 text-xs text-[#7d86ad]">The amount of money that was involved in financial assets</p>
                   <div className="mt-6 flex h-40 items-end justify-between gap-2">
@@ -191,8 +191,8 @@ export default function Dashboard() {
               </div>
             </section>
 
-            <section className="space-y-4 lg:col-span-4 animate-fade-in-up delay-300">
-              <article className="rounded-3xl border border-white/70 bg-white/75 p-5 hover-lift">
+            <section className="space-y-4 lg:col-span-4">
+              <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
                 <p className="mb-3 text-sm font-semibold text-[#2b3156]">Abandonment rate</p>
                 <p className="text-xs text-rose-500">-1.3% compare to the last week</p>
                 <div className="mt-4 space-y-2">
@@ -208,7 +208,7 @@ export default function Dashboard() {
                 </div>
               </article>
 
-              <article className="rounded-3xl border border-white/70 bg-gradient-to-br from-[#f1f3ff] to-[#d6f5f1] p-5 hover-lift">
+              <article className="rounded-3xl border border-white/70 bg-gradient-to-br from-[#f1f3ff] to-[#d6f5f1] p-5">
                 <p className="text-sm font-semibold text-[#2b3156]">My cards (3)</p>
                 <div className="mt-3 space-y-[-16px]">
                   <div className="rounded-2xl bg-gradient-to-r from-[#4540bb] to-[#7f79f0] p-4 text-white">
@@ -226,7 +226,7 @@ export default function Dashboard() {
                 </div>
               </article>
 
-              <article className="rounded-3xl border border-white/70 bg-white/75 p-5 hover-lift">
+              <article className="rounded-3xl border border-white/70 bg-white/75 p-5">
                 <div className="mb-3 flex items-center justify-between">
                   <p className="text-sm font-semibold text-[#2b3156]">Last transactions</p>
                   <button className="text-xs font-semibold text-[#4f56cb]">All</button>

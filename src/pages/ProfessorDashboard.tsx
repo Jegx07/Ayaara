@@ -44,14 +44,14 @@ export default function ProfessorDashboard() {
   ];
 
   return (
-    <div className="flex min-h-screen w-full bg-[#edf1fb] text-[#222741] animate-fade-in-up">
+    <div className="flex min-h-screen w-full bg-[#edf1fb] text-[#222741]">
       {/* Sidebar */}
       <AppSidebar userRole="professor" isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
 
       {/* Main Content */}
       <main className={`flex-1 ${isCollapsed ? 'lg:ml-16' : 'lg:ml-64'} transition-all duration-300`}>
         {/* Header */}
-        <div className="sticky top-0 z-10 border-b border-white/70 bg-white/55 backdrop-blur-xl animate-fade-in-down">
+        <div className="sticky top-0 z-10 border-b border-white/70 bg-white/55 backdrop-blur-xl">
           <div className="flex h-16 items-center justify-between px-6">
             {/* Search Bar */}
             <div className="flex flex-1 items-center gap-2 rounded-full bg-white/85 px-4 py-2 border border-white/80 max-w-sm">
@@ -93,8 +93,8 @@ export default function ProfessorDashboard() {
                 key={idx}
                 className={`rounded-2xl p-4 border transition-all ${
                   kpi.highlighted
-                    ? 'bg-[#5c5fdc] border-[#4a50cf] text-white hover-lift'
-                    : 'bg-white/70 border-white/80 text-[#222741] backdrop-blur-xl hover-lift'
+                    ? 'bg-[#5c5fdc] border-[#4a50cf] text-white'
+                    : 'bg-white/70 border-white/80 text-[#222741] backdrop-blur-xl'
                 }`}
               >
                 <div className={`text-xs font-medium mb-2 ${kpi.highlighted ? 'text-[#d9dcff]' : 'text-[#7a85b3]'}`}>
@@ -115,7 +115,7 @@ export default function ProfessorDashboard() {
             {/* Left Column */}
             <div className="lg:col-span-2 space-y-6">
               {/* Alerts Section */}
-              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl animate-fade-in-up delay-100">
+              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl">
                 <div className="flex items-center gap-2 mb-4">
                   <AlertTriangle className="w-5 h-5 text-rose-600" />
                   <h2 className="text-sm font-semibold text-[#222741]">Critical Alerts</h2>
@@ -144,7 +144,7 @@ export default function ProfessorDashboard() {
               </div>
 
               {/* Weekly Department Trends */}
-              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl animate-fade-in-up delay-200">
+              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl">
                 <h2 className="text-sm font-semibold text-[#222741] mb-4">Weekly Trends</h2>
                 <div className="h-[200px] flex items-end justify-between gap-2">
                   {departmentStats.map((entry, idx) => (
@@ -164,7 +164,7 @@ export default function ProfessorDashboard() {
             {/* Right Column */}
             <div className="space-y-6">
               {/* At-Risk Students */}
-              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl animate-fade-in-up delay-300">
+              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl">
                 <h2 className="text-sm font-semibold text-[#222741] mb-4">Top Students</h2>
                 <div className="space-y-2">
                   {studentPerformance.slice(0, 5).map((student, idx) => (
@@ -191,7 +191,7 @@ export default function ProfessorDashboard() {
               </div>
 
               {/* Motivation Distribution - Donut */}
-              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl animate-fade-in-up delay-400">
+              <div className="rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-xl">
                 <h2 className="text-sm font-semibold text-[#222741] mb-4">Motivation Distribution</h2>
                 <div className="flex flex-col items-center justify-center">
                   <svg width="140" height="140" viewBox="0 0 140 140" className="mb-4">

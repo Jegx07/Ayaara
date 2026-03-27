@@ -11,10 +11,10 @@ export default function Auth() {
 
   return (
     <div className="relative min-h-screen bg-[#edf1fb] text-[#222741]">
-      <div className="pointer-events-none absolute left-0 top-0 h-72 w-72 rounded-full bg-[#d9ddff] blur-3xl animate-float-slow" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#f1dcff] blur-3xl animate-float-slow delay-300" />
+      <div className="pointer-events-none absolute left-0 top-0 h-72 w-72 rounded-full bg-[#d9ddff] blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#f1dcff] blur-3xl" />
       {/* Premium Header */}
-      <div className="absolute top-0 left-0 right-0 z-10 border-b border-white/70 bg-white/55 backdrop-blur-xl animate-fade-in-down">
+      <div className="absolute top-0 left-0 right-0 z-10 border-b border-white/70 bg-white/55 backdrop-blur-xl">
         <div className="flex h-16 items-center justify-between px-6">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6f63ff] to-[#4a50cf] flex items-center justify-center">
@@ -24,7 +24,7 @@ export default function Auth() {
           </div>
           
           {/* Role Selector */}
-          <div className="flex items-center gap-3 bg-white/80 rounded-full p-1.5 border border-white/80 backdrop-blur-md hover-lift">
+          <div className="flex items-center gap-3 bg-white/80 rounded-full p-1.5 border border-white/80 backdrop-blur-md">
             <button
               onClick={() => setRole('student')}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
@@ -58,7 +58,7 @@ export default function Auth() {
       </div>
 
       {/* Auth Content */}
-      <div className="pt-16 animate-fade-in-up delay-200">
+      <div className="pt-16">
         <AuthUI 
           signInContent={{
             image: { src: studentsImage, alt: 'Students using motivation tracking dashboard' },
