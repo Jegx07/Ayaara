@@ -12,8 +12,7 @@ import {
   Users,
   Wifi,
   Heart,
-  Map,
-  MessageCircle
+  Map
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -41,11 +40,6 @@ const studentLinks: SidebarLink[] = [
     label: "Career Assistant",
     href: "/career",
     icon: TrendingUp,
-  },
-  {
-    label: "AI Chatbot",
-    href: "/chatbot",
-    icon: MessageCircle,
   },
   {
     label: "Career Path",

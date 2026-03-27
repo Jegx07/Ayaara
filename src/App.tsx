@@ -20,10 +20,6 @@ import CareerAssistant from "./pages/CareerAssistant";
 import CareerPath from "./pages/CareerPath";
 import MentalSupport from "./pages/MentalSupport";
 import Profile from "./pages/Profile";
-import MoodLog from "./pages/MoodLog";
-import Resources from "./pages/Resources";
-import Community from "./pages/Community";
-import AiChatbot from "./pages/AiChatbot";
 import Chatbot from "./components/Chatbot";
 import AppErrorBoundary from "./components/AppErrorBoundary";
 
@@ -31,7 +27,7 @@ const queryClient = new QueryClient();
 
 const ChatbotWrapper = () => {
   const location = useLocation();
-  return location.pathname !== "/" && location.pathname !== "/chatbot" ? <Chatbot /> : null;
+  return location.pathname !== '/' ? <Chatbot /> : null;
 };
 
 const App = () => {
@@ -47,10 +43,6 @@ const App = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/mood-log" element={<MoodLog />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/community" element={<Community />} />
-              <Route path="/chatbot" element={<AiChatbot />} />
               <Route path="/skills" element={<SkillsPage />} />
               <Route path="/career" element={<CareerAssistant />} />
               <Route path="/career-path" element={<CareerPath />} />

@@ -47,11 +47,11 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full bg-[#edf1fb] text-[#222741] animate-fade-in-up">
+    <div className="flex min-h-screen w-full bg-[#edf1fb] text-[#222741]">
       <AppSidebar userRole="student" isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       <main className={`flex-1 ${isCollapsed ? 'lg:ml-16' : 'lg:ml-64'} transition-all duration-300`}>
         {/* Header */}
-        <div className="sticky top-0 z-10 border-b border-white/70 bg-white/55 backdrop-blur-xl animate-fade-in-down">
+        <div className="sticky top-0 z-10 border-b border-white/70 bg-white/55 backdrop-blur-xl">
           <div className="flex h-16 items-center px-6">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-[#ecefff]">
@@ -68,7 +68,7 @@ export default function SettingsPage() {
         {/* Page Content */}
         <div className="p-6 space-y-6">
           {/* Premium Section */}
-          <div className="rounded-2xl border border-white/70 bg-gradient-to-br from-[#e9ecff] to-[#f4f2ff] p-6 backdrop-blur-xl animate-fade-in-up delay-100 hover-lift">
+          <div className="rounded-2xl border border-white/70 bg-gradient-to-br from-[#e9ecff] to-[#f4f2ff] p-6 backdrop-blur-xl">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-lg bg-[#5c5fdc]/10">
@@ -103,7 +103,7 @@ export default function SettingsPage() {
           {/* Main Settings Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Profile Settings */}
-            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl animate-fade-in-up delay-200 hover-lift">
+            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 rounded-lg bg-[#ecefff]">
                   <User className="w-5 h-5 text-[#525ad2]" />
@@ -161,7 +161,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Notifications Settings */}
-            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl animate-fade-in-up delay-300 hover-lift">
+            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 rounded-lg bg-[#ecefff]">
                   <Bell className="w-5 h-5 text-[#525ad2]" />
@@ -212,7 +212,7 @@ export default function SettingsPage() {
           {/* Appearance & Security */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Appearance */}
-            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl animate-fade-in-up delay-300 hover-lift">
+            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 rounded-lg bg-[#ecefff]">
                   {darkMode ? (
@@ -248,7 +248,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Security & Privacy */}
-            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl animate-fade-in-up delay-400 hover-lift">
+            <div className="rounded-2xl border border-white/70 bg-white/65 p-6 backdrop-blur-xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 rounded-lg bg-[#ecefff]">
                   <Lock className="w-5 h-5 text-[#525ad2]" />
