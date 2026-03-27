@@ -236,58 +236,69 @@ export default function LandingPage(): JSX.Element {
       {/* Hero Section */}
       <section className="relative pt-24 md:pt-32 pb-12 md:pb-16 px-4 md:px-8 lg:px-12">
         {/* Background decorative blobs */}
-        <div className="absolute top-4 right-4 md:top-8 md:right-8 w-44 h-44 md:w-56 md:h-56 bg-[#ddf7b7] rounded-full flex items-center justify-center -z-20" />
-        <img
-          src="/ayaara logo.jpeg"
-          alt="Ayaara logo"
-          className="absolute top-6 right-6 md:top-10 md:right-10 w-36 h-36 md:w-52 md:h-52 rounded-full object-cover border-2 border-white shadow-lg -z-10"
-        />
+        <div className="absolute top-10 right-8 md:top-14 md:right-12 w-44 h-44 md:w-56 md:h-56 bg-[#ddf7b7] rounded-full -z-20" />
         <div className="absolute -left-20 top-96 w-40 h-40 md:w-64 md:h-64 bg-[#ddf7b74c] rounded-full blur-3xl -z-30" />
 
         <div className="max-w-7xl mx-auto">
-          {/* Hero Heading */}
-          <div className="mb-8 md:mb-12">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#141911] mb-2 leading-tight">
-              Track Your Mind,
-            </h1>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#8cd644] leading-tight">
-              Conquer Your Day
-            </h2>
-          </div>
-
-          {/* Hero Description */}
-          <p className="text-sm md:text-base lg:text-lg text-[#596654] mb-8 max-w-2xl leading-relaxed">
-            An AI-powered student wellbeing platform — track stress, monitor daily mood, connect to campus mental health resources.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <button
-              type="button"
-              onClick={() => navigate("/dashboard")}
-              className="px-6 md:px-8 py-3 bg-[#141911] text-white text-sm md:text-base font-semibold rounded-full hover:bg-[#2d3828] transition-colors whitespace-nowrap"
-            >
-              Start Tracking Free →
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate("/mood-log")}
-              className="px-6 md:px-8 py-3 bg-white text-[#141911] text-sm md:text-base font-medium rounded-full hover:bg-gray-50 transition-colors whitespace-nowrap border border-gray-200"
-            >
-              Watch Demo ▶
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-            {statsData.map((stat) => (
-              <div key={stat.label}>
-                <div className="text-2xl md:text-3xl font-bold text-[#141911] mb-1">
-                  {stat.value}
-                </div>
-                <p className="text-xs md:text-sm text-[#596654]">{stat.label}</p>
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] items-center gap-10 lg:gap-16">
+            <div>
+              {/* Hero Heading */}
+              <div className="mb-8 md:mb-12">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#141911] mb-2 leading-tight">
+                  Track Your Mind,
+                </h1>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#8cd644] leading-tight">
+                  Conquer Your Day
+                </h2>
               </div>
-            ))}
+
+              {/* Hero Description */}
+              <p className="text-sm md:text-base lg:text-lg text-[#596654] mb-8 max-w-2xl leading-relaxed">
+                An AI-powered student wellbeing platform &mdash; track stress, monitor daily mood, connect to campus mental health resources.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <button
+                  type="button"
+                  onClick={() => navigate("/dashboard")}
+                  className="px-6 md:px-8 py-3 bg-[#141911] text-white text-sm md:text-base font-semibold rounded-full hover:bg-[#2d3828] transition-colors whitespace-nowrap"
+                >
+                  Start Tracking Free &rarr;
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate("/mood-log")}
+                  className="px-6 md:px-8 py-3 bg-white text-[#141911] text-sm md:text-base font-medium rounded-full hover:bg-gray-50 transition-colors whitespace-nowrap border border-gray-200"
+                >
+                  Watch Demo &#9654;
+                </button>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                {statsData.map((stat) => (
+                  <div key={stat.label}>
+                    <div className="text-2xl md:text-3xl font-bold text-[#141911] mb-1">
+                      {stat.value}
+                    </div>
+                    <p className="text-xs md:text-sm text-[#596654]">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Hero Logo Visual */}
+            <div className="relative flex items-center justify-center lg:justify-end order-first lg:order-none">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[420px] rounded-full bg-white border border-[#ddf7b7] shadow-[0_24px_70px_rgba(20,25,17,0.18)] flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full bg-[#ddf7b7] opacity-40 blur-3xl -z-10" />
+                <img
+                  src="/ayaara logo.jpeg"
+                  alt="Ayaara logo"
+                  className="w-[70%] h-[70%] rounded-full object-cover shadow-md"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
